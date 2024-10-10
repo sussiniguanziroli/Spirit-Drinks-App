@@ -22,20 +22,25 @@ const ProductsScreen = () => {
                     <Text style={styles.productDesc}>{item.description}</Text>
 
                     <View style={styles.productPriceContainer}>
-                    <Text style={styles.productPrice}>{item.price}</Text>
+                        <Text style={styles.productPrice}>{item.price}</Text>
                     </View>
                 </View>
-                
+
             </ItemCard>
         )
     }
 
     return (
-        <FlatList
-            data={products}
-            keyExtractor={item => item.id}
-            renderItem={renderProductItem}
-        />
+        <>
+            <View>
+                <Text></Text>
+            </View>
+            <FlatList
+                data={products}
+                keyExtractor={item => item.id}
+                renderItem={renderProductItem}
+            />
+        </>
     )
 }
 
@@ -44,7 +49,8 @@ export default ProductsScreen
 const styles = StyleSheet.create({
     productContainer: {
         padding: 10,
-        margin: 5,
+        margin: 7,
+        marginHorizontal: 15,
         flexDirection: "row",
         alignItems: "center",
     },
