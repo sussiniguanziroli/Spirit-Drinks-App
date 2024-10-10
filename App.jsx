@@ -5,11 +5,13 @@ import { StatusBar } from 'expo-status-bar';
 import CategoriesScreen from './src/screens/CategoriesScreen';
 import Header from './src/components/Header';
 import ProductsScreen from './src/screens/ProductsScreen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+
+    const [category, setCategory] = useState("");
 
     const [loaded, error] = useFonts({
         'PlayfairDisplay': require('./assets/fonts/PlayfairDisplay-VariableFont_wght.ttf'),
@@ -31,7 +33,14 @@ export default function App() {
 
         <>
         <Header />
-        <ProductsScreen/>
+        {
+            category
+            ?
+            <ProductsScreen setCategoryUp={setCategory} categoryDown={category}/>
+            :
+            <CategoriesScreen setCategory={setCategory}/>
+        }
+        
         <StatusBar style="auto" />
         </>
         

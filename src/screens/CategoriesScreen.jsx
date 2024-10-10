@@ -1,12 +1,14 @@
-import { StyleSheet, Text, View, FlatList, Image} from 'react-native'
+import { StyleSheet, Text, View, FlatList, Image, Pressable} from 'react-native'
 import React from 'react'
 import categories from '../data/categories.json'
 import ItemCard from '../components/ItemCard'
 
-const CategoriesScreen = () => {
+const CategoriesScreen = ({setCategory}) => {
 
     const renderCategoryItem = ({item}) => {
         return (
+            
+            <Pressable onPress={()=>setCategory(item.id)}>
             <ItemCard style={styles.flatCardContainer}>
                 {/* La prop de children dentro de ItemCard responde a todo lo que ponemos dentro de la etiqueta componente */}
                 <Image
@@ -16,6 +18,7 @@ const CategoriesScreen = () => {
                 />
                 <Text style={styles.categoryTitle}>{item.name}</Text>
             </ItemCard>
+            </Pressable>
         )
     }
 

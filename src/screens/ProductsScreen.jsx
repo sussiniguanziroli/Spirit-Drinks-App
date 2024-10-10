@@ -1,11 +1,19 @@
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
-import React from 'react'
-import products from "../data/products.json"
+import { StyleSheet, Text, View, FlatList, Image, Pressable } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import productos from "../data/products.json"
 import ItemCard from '../components/ItemCard'
 import { colores } from '../global/colores'
 
 
-const ProductsScreen = () => {
+const ProductsScreen = ({categoryDown, setCategoryUp}) => {
+    const [filteredProducts, setFilteredProducts] = useState([]);
+
+    useEffect(()=> {
+        const productsFilter = productos.filter((producto) => producto.category.id === categoryDown)
+        setFilteredProducts(productsFilter)
+    },[categoryDown]);
+
+    
 
     const renderProductItem = ({ item }) => {
         return (
@@ -44,11 +52,9 @@ const ProductsScreen = () => {
 
     return (
         <>
-            <View>
-                <Text></Text>
-            </View>
+            <Pressable onPress={()=>setCategoryUp("")}><Text  style={styles.backButton} >Volver</Text></Pressable>
             <FlatList
-                data={products}
+                data={filteredProducts}
                 keyExtractor={item => item.id}
                 renderItem={renderProductItem}
             />
@@ -106,5 +112,9 @@ const styles = StyleSheet.create({
     sinStockText: {
         fontWeight: 'bold',
         color: colores.borgona,
+    },
+    backButton: {
+        padding: 7,
+        fontSize: 18,
     },
 })
