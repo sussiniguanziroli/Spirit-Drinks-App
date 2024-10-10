@@ -2,57 +2,34 @@
     {
         "id": 1,
         "name": "Johnnie Walker Black Label",
-        "description": "Un whisky escoc\u00e9s de mezcla de lujo, a\u00f1ejado por 12 a\u00f1os, conocido por su sabor suave y su complejo perfil de sabores.",
+        "description": "Un whisky escocés de mezcla de lujo, añejado por 12 años, conocido por su sabor suave y su complejo perfil de sabores.",
         "price": 45.99,
         "image": "https://www.totalwine.com/dynamic/x1000,sq/media/sys_master/twmmedia/h0e/h8e/15949502775326.png",
         "category": {
             "id": "whisky",
             "name": "Whisky"
-        }
-    },
-    {
-        "id": 2,
-        "name": "Chateau Margaux",
-        "description": "Un vino tinto franc\u00e9s de la regi\u00f3n de Burdeos, reconocido mundialmente por su elegancia y complejidad.",
-        "price": 300.0,
-        "image": "https://grandcruliquidassets.com/cdn/shop/products/BDXMARMARG-0750-2009-F0L0C0_600x.jpg?v=1591939010",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 3,
-        "name": "Ron Zacapa 23",
-        "description": "Ron premium de Guatemala, envejecido en una mezcla de barricas de bourbon, jerez y vino Pedro Xim\u00e9nez.",
-        "price": 60.99,
-        "image": "https://cdn.diffords.com/contrib/bws/2017/10/59db808046f92.jpg",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 4,
-        "name": "Bombay Sapphire",
-        "description": "Un gin premium de estilo London Dry, conocido por su sabor limpio y equilibrado, con notas de enebro y especias.",
-        "price": 29.99,
-        "image": "https://cdn11.bigcommerce.com/s-taixn69rog/images/stencil/1280x1280/products/29067/806899/157400__05792.1637566608.jpg?c=1",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
+        },
+        "stock": 15,
+        "tags": [
+            "premium",
+            "popular",
+            "recomendado"
+        ]
     },
     {
         "id": 5,
         "name": "Jameson Irish Whiskey",
-        "description": "Un whisky irland\u00e9s suave y ligero, perfecto para disfrutar solo o en c\u00f3cteles.",
-        "price": 34.99,
+        "description": "Un whisky irlandés suave y ligero, perfecto para disfrutar solo o en cócteles.",
+        "price": 16.99,
         "image": "https://www.espaciovino.com.ar/media/default/0001/59/thumb_58453_default_big.jpeg",
         "category": {
             "id": "whisky",
             "name": "Whisky"
-        }
+        },
+        "stock": 10,
+        "tags": [
+            "recomendado"
+        ]
     },
     {
         "id": 6,
@@ -63,161 +40,136 @@
         "category": {
             "id": "vino",
             "name": "Vino"
-        }
+        },
+        "stock": 8,
+        "tags": [
+            "popular"
+        ]
     },
     {
         "id": 7,
         "name": "Glenfiddich 12 Year Old",
-        "description": "Un whisky de malta escoc\u00e9s suave, con notas de pera fresca y roble sutil.",
+        "description": "Un whisky de malta escocés suave, con notas de pera fresca y roble sutil.",
         "price": 49.99,
         "image": "https://www.totalwine.com/dynamic/x1000,sq/media/sys_master/twmmedia/hdc/hed/27950374813726.png",
         "category": {
             "id": "whisky",
             "name": "Whisky"
-        }
-    },
-    {
-        "id": 8,
-        "name": "Havana Club 7 A\u00f1os",
-        "description": "Ron cubano a\u00f1ejo, con ricos sabores de cacao, vainilla, az\u00facar moreno y frutas tropicales.",
-        "price": 27.99,
-        "image": "https://cdn.diffords.com/contrib/bws/2017/10/59f3457bf2f9b.png",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
+        },
+        "stock": 13,
+        "tags": [
+            "premium",
+            "recomendado"
+        ]
     },
     {
         "id": 9,
         "name": "Tanqueray No. Ten",
-        "description": "Un gin de alta gama, destilado en peque\u00f1os lotes, con notas de c\u00edtricos frescos y enebro.",
+        "description": "Un gin de alta gama, destilado en pequeños lotes, con notas de cítricos frescos y enebro.",
         "price": 34.99,
         "image": "https://assets.bonappetit.com/photos/57d82ff8ca64e36a6c3bcc9a/master/pass/bottle-tanqueray-2.jpg",
         "category": {
             "id": "gin",
             "name": "Gin"
-        }
+        },
+        "stock": 5,
+        "tags": [
+            "premium"
+        ]
     },
     {
         "id": 10,
-        "name": "Mo\u00ebt & Chandon Brut Imp\u00e9rial",
-        "description": "Champagne franc\u00e9s, ic\u00f3nico y elegante, con un equilibrio perfecto de sabores afrutados y frescos.",
+        "name": "Moët & Chandon Brut Impérial",
+        "description": "Champagne francés, icónico y elegante, con un equilibrio perfecto de sabores afrutados y frescos.",
         "price": 59.99,
         "image": "https://static.millesima.com/s3/attachements/h1000px/3462_NM_cc.png",
         "category": {
             "id": "vino",
             "name": "Vino"
-        }
+        },
+        "stock": 3,
+        "tags": [
+            "premium",
+            "popular"
+        ]
     },
     {
         "id": 11,
         "name": "Macallan 18 Year Old",
-        "description": "Un whisky escoc\u00e9s de malta simple, envejecido en barricas de jerez, con sabores ricos y complejos.",
+        "description": "Un whisky escocés de malta simple, envejecido en barricas de jerez, con sabores ricos y complejos.",
         "price": 299.99,
         "image": "https://cdn.webshopapp.com/shops/198134/files/378488168/macallan-macallan-18-years-old-1995-2013-sherry-oa.jpg",
         "category": {
             "id": "whisky",
             "name": "Whisky"
-        }
-    },
-    {
-        "id": 12,
-        "name": "Dom P\u00e9rignon Vintage",
-        "description": "Un champ\u00e1n vintage prestigioso, conocido por su complejidad y elegancia.",
-        "price": 180.0,
-        "image": "https://cdn.sanity.io/images/1p5qvg3x/ww/41dccfb094fed15be96e3b413757374e462b54c0-1080x1080.jpg?w=2400&h=2400&q=75&fit=crop&auto=format",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 13,
-        "name": "Bacardi Superior",
-        "description": "Ron blanco cl\u00e1sico, ideal para c\u00f3cteles como el mojito y el daiquiri.",
-        "price": 18.99,
-        "image": "http://crownwineandspirits.com/cdn/shop/products/bacardi-rum-bacardi-superior-white-rum-1-75l-31515692925021.jpg?v=1664302923",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
+        },
+        "stock": 2,
+        "tags": [
+            "premium",
+            "exclusivo",
+            "recomendado"
+        ]
     },
     {
         "id": 14,
         "name": "Hendrick's Gin",
-        "description": "Gin premium con infusiones de pepino y rosa, creando un perfil de sabor \u00fanico y refrescante.",
+        "description": "Gin premium con infusiones de pepino y rosa, creando un perfil de sabor único y refrescante.",
         "price": 39.99,
         "image": "https://us.hendricksgin.com/assets/Uploads/9b56bfc193/HENDRI4__FillWzk3MCwxMDAwXQ.JPG",
         "category": {
             "id": "gin",
             "name": "Gin"
-        }
-    },
-    {
-        "id": 15,
-        "name": "Lagavulin 16 Year Old",
-        "description": "Un whisky escoc\u00e9s de Islay, conocido por su fuerte sabor ahumado y turba.",
-        "price": 89.99,
-        "image": "https://www.masterofmalt.com/whiskies/p-2813/lagavulin/lagavulin-16-year-old-whisky.jpg?ss=2.0",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
+        },
+        "stock": 9,
+        "tags": [
+            "premium",
+            "popular"
+        ]
     },
     {
         "id": 16,
-        "name": "Veuve Clicquot Ros\u00e9",
+        "name": "Veuve Clicquot Rosé",
         "description": "Champagne rosado de alta calidad, con sabores de frutas rojas y un final cremoso.",
         "price": 79.99,
         "image": "https://www.veuveclicquot.com/on/demandware.static/-/Sites-mh-master/default/dw64db8fd7/images/large/veuve_clicquot/packshots/222211691-rose-brut-new-identity.png",
         "category": {
             "id": "vino",
             "name": "Vino"
-        }
-    },
-    {
-        "id": 17,
-        "name": "Captain Morgan Spiced Rum",
-        "description": "Ron especiado con un sabor distintivo, perfecto para mezclar en c\u00f3cteles.",
-        "price": 24.99,
-        "image": "https://vintagemattituck.com/cdn/shop/products/captain_morgan_original_spiced_rum_1024x1024.jpg?v=1571346190",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
+        },
+        "stock": 4,
+        "tags": [
+            "premium",
+            "exclusivo"
+        ]
     },
     {
         "id": 18,
         "name": "Beefeater Gin",
-        "description": "Un gin cl\u00e1sico de Londres, conocido por su fuerte sabor a enebro y c\u00edtricos.",
+        "description": "Un gin clásico de Londres, conocido por su fuerte sabor a enebro y cítricos.",
         "price": 22.99,
         "image": "https://www.beefeatergin.com/wp-content/uploads/2023/01/Beefeater-Pink-Strawberry-Gin-Side-aspect-ratio-320-540.png",
         "category": {
             "id": "gin",
             "name": "Gin"
-        }
-    },
-    {
-        "id": 19,
-        "name": "Woodford Reserve Bourbon",
-        "description": "Un bourbon premium de Kentucky, con notas de vainilla, caramelo y especias.",
-        "price": 39.99,
-        "image": "https://www.woodfordreserve.com/wp-content/uploads/2023/01/21CR07420U03_FOB_0031_Alt-scaled-e1674058905643.jpg",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
+        },
+        "stock": 12,
+        "tags": ["ingles", "invasor"]
     },
     {
         "id": 20,
         "name": "Penfolds Grange",
-        "description": "Un vino tinto australiano ic\u00f3nico, conocido por su profundidad y longevidad.",
+        "description": "Un vino tinto australiano icónico, conocido por su profundidad y longevidad.",
         "price": 600.0,
         "image": "https://www.penfolds.com/dw/image/v2/BDBC_PRD/on/demandware.static/-/Sites-tweus-master-catalog/default/dw7c8f1e01/images/hi-res/Penfolds/2022%20Collection/_0011_PEN+2018+AUSCOLL+Grange+Shz+FL750+Cork.png?sw=566&sh=849&sm=fit",
         "category": {
             "id": "vino",
             "name": "Vino"
-        }
+        },
+        "stock": 1,
+        "tags": [
+            "premium",
+            "exclusivo"
+        ]
     },
     {
         "id": 21,
@@ -228,711 +180,197 @@
         "category": {
             "id": "ron",
             "name": "Ron"
-        }
+        },
+        "stock": 7,
+        "tags": [
+            "recomendado"
+        ]
     },
     {
         "id": 22,
         "name": "Sipsmith London Dry Gin",
-        "description": "Un gin artesanal de Londres, conocido por su equilibrio perfecto de enebro y c\u00edtricos.",
+        "description": "Un gin artesanal de Londres, conocido por su equilibrio perfecto de enebro y cítricos.",
         "price": 35.99,
         "image": "https://sipsmith.com/wp-content/uploads/2016/07/london-dry-gin-1.png",
         "category": {
             "id": "gin",
             "name": "Gin"
-        }
-    },
-    {
-        "id": 23,
-        "name": "Balvenie DoubleWood 12 Year Old",
-        "description": "Un whisky escoc\u00e9s de malta, madurado en dos tipos de barricas para una complejidad adicional.",
-        "price": 54.99,
-        "image": "https://www.masterofmalt.com/whiskies/p-2813/balvenie/balvenie-doublewood-12-year-old-whisky.jpg?ss=2.0",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 24,
-        "name": "Louis Roederer Cristal",
-        "description": "Un champ\u00e1n franc\u00e9s de prestigio, conocido por su finura y elegancia.",
-        "price": 250.0,
-        "image": "https://static.millesima.com/s3/attachements/h531px/3008_NM_cc.png",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 25,
-        "name": "Diplom\u00e1tico Reserva Exclusiva",
-        "description": "Ron venezolano de alta calidad, con un perfil de sabor dulce y complejo.",
-        "price": 49.99,
-        "image": "https://www.rondiplomatico.com/wp-content/uploads/2022/03/ReservaExclusiva_678x1310px.png",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 26,
-        "name": "Monkey 47 Gin",
-        "description": "Un gin premium alem\u00e1n, destilado con 47 bot\u00e1nicos, creando un sabor \u00fanico y complejo.",
-        "price": 49.99,
-        "image": "https://www.totalwine.com/dynamic/x1000,375ml/media/sys_master/twmmedia/h3b/h77/28001619181598.png",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 27,
-        "name": "Laphroaig 10 Year Old",
-        "description": "Un whisky escoc\u00e9s de Islay, conocido por su intenso sabor a turba y ahumado.",
-        "price": 59.99,
-        "image": "https://www.laphroaig.com/sites/default/files/styles/original/public/2023-11/Laphroaig_10YO_BottleBox_NewPackaging_Front_4688531.jpg.webp?itok=GsHWhbc3",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 28,
-        "name": "Taittinger Comtes de Champagne Blanc de Blancs",
-        "description": "Un champ\u00e1n franc\u00e9s de alta gama, elaborado solo con uvas Chardonnay.",
-        "price": 199.99,
-        "image": "https://cdn11.bigcommerce.com/s-9hu30/images/stencil/2048x2048/products/1696/4143/taittinger_comtes_de_champagne__07005.1701292513.jpg?c=2",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 29,
-        "name": "Flor de Ca\u00f1a 18 Year Old",
-        "description": "Ron nicarag\u00fcense premium, con un sabor suave y complejo, envejecido durante 18 a\u00f1os.",
-        "price": 52.99,
-        "image": "https://img.drinksdirect.com/flor-de-cana-centenario-18-year-old-single-estate-3527/5312/800x800/3527.webp",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 30,
-        "name": "Plymouth Gin",
-        "description": "Un gin ingl\u00e9s tradicional, con un sabor equilibrado y un ligero toque dulce.",
-        "price": 27.99,
-        "image": "https://www.plymouthgin.com/wp-content/uploads/2023/01/241571_plymouthgin_bar_RT1b_sf-aspect-ratio-16-9.jpg",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 31,
-        "name": "Glenmorangie Original 10 Year Old",
-        "description": "Un whisky escoc\u00e9s de malta suave y cremoso, con notas de frutas, vainilla y especias.",
-        "price": 40.99,
-        "image": "http://www.glenmorangie.com/cdn/shop/products/Glenmorangie-Original-2022-packshot-RVB_medium.width-1280x-prop_2.png?v=1660079869&width=800",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 32,
-        "name": "Chateau d'Yquem Sauternes",
-        "description": "Un vino dulce franc\u00e9s de la regi\u00f3n de Burdeos, conocido por su elegancia y longevidad.",
-        "price": 400.0,
-        "image": "https://static.millesima.com/s3/attachements/h531px/2256_NM_c.png",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 33,
-        "name": "Plantation XO 20th Anniversary",
-        "description": "Ron de Barbados, envejecido en barricas de roble para un sabor rico y complejo.",
-        "price": 60.99,
-        "image": "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hd7/h26/27949682229278.png",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 34,
-        "name": "Roku Gin",
-        "description": "Un gin japon\u00e9s artesanal, destilado con seis bot\u00e1nicos japoneses \u00fanicos.",
-        "price": 34.99,
-        "image": "https://house.suntory.com/sites/default/files/styles/original/public/2024-04/RBP-1-Harvest-Season-Image.jpg.webp?itok=egE_B0KG",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 35,
-        "name": "Yamazaki 12 Year Old",
-        "description": "Un whisky japon\u00e9s de malta, conocido por su sabor suave y equilibrado.",
-        "price": 149.99,
-        "image": "https://www.masterofmalt.com/whiskies/p-2813/yamazaki-japanese/yamazaki-12-year-old-whisky.jpg?ss=2.0",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 36,
-        "name": "Cakebread Cellars Chardonnay",
-        "description": "Un vino blanco californiano, con sabores frescos y afrutados y un final cremoso.",
-        "price": 39.99,
-        "image": "https://www.cakebread.com/on/demandware.static/-/Sites-cakebread-master-catalog/default/dw0ba1eb72/images/wines/Chardonnay-Napa-Valley-No-Vintage.png",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 37,
-        "name": "Don Papa Rum",
-        "description": "Ron filipino, envejecido en barricas de roble americano, con un perfil de sabor suave y afrutado.",
-        "price": 39.99,
-        "image": "http://www.donpaparum.com/cdn/shop/products/DP7_2x_a01a3f46-368e-4e91-84e4-87c0f8a6d554.png?v=1663159688",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 38,
-        "name": "The Botanist Gin",
-        "description": "Un gin artesanal de la isla de Islay, destilado con 22 bot\u00e1nicos locales.",
-        "price": 44.99,
-        "image": "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hd0/hdc/27093985525790.png",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 39,
-        "name": "Oban 14 Year Old",
-        "description": "Un whisky escoc\u00e9s de malta, conocido por su sabor rico y complejo con notas de frutas secas y especias.",
-        "price": 79.99,
-        "image": "http://leonandsonwine.com/cdn/shop/products/Oban_14-2.jpg?v=1678474979",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 40,
-        "name": "Silver Oak Napa Valley Cabernet Sauvignon",
-        "description": "Un vino tinto californiano, conocido por su elegancia y estructura.",
-        "price": 125.0,
-        "image": "https://static.wineaccess.com/optimized/images/products/2023/02/2018_Silver_Oak_Cabernet_Sauvignon_Napa_Valley_Bottleshot/36450bd08433b819c8bcd861f6394df9.png",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 41,
-        "name": "Barcel\u00f3 Imperial",
-        "description": "Ron dominicano de alta calidad, envejecido en barricas de roble americano y franc\u00e9s.",
-        "price": 43.99,
-        "image": "http://crownwineandspirits.com/cdn/shop/products/BarceloImperialOnyx.png?v=1670262707",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 42,
-        "name": "Nolet's Silver Dry Gin",
-        "description": "Un gin premium, con un perfil de sabor floral y afrutado, destilado en peque\u00f1os lotes.",
-        "price": 49.99,
-        "image": "https://cdn.diffords.com/contrib/bws/2017/10/59db81f32f5e5.jpg",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 43,
-        "name": "Highland Park 12 Year Old",
-        "description": "Un whisky escoc\u00e9s de malta, con un equilibrio perfecto de notas de miel, frutas y turba.",
-        "price": 49.99,
-        "image": "https://cdn11.bigcommerce.com/s-d24ojig/images/stencil/1280x1280/products/90/4689/12-year-old-pack-768x1039__44467.1539734075.jpg?c=2",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 44,
-        "name": "Bollinger Special Cuv\u00e9e",
-        "description": "Champagne franc\u00e9s, conocido por su estructura y complejidad, con sabores de frutas maduras y especias.",
-        "price": 59.99,
-        "image": "https://www.champagne-bollinger.com/_nuxt/image/90e2aa.jpeg",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 45,
-        "name": "Matusalem Gran Reserva 15 Year Old",
-        "description": "Ron dominicano premium, envejecido durante 15 a\u00f1os para un sabor suave y complejo.",
-        "price": 39.99,
-        "image": "https://images.finedrams.com/image/18155-large-1/matusalem-15-year-old-gran-reserva-rum.jpg",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 46,
-        "name": "Four Pillars Rare Dry Gin",
-        "description": "Un gin australiano, conocido por su equilibrio perfecto de bot\u00e1nicos y sabor fresco.",
-        "price": 34.99,
-        "image": "https://www.astorwines.com/images/items/35098.jpg",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 47,
-        "name": "Ardbeg 10 Year Old",
-        "description": "Un whisky escoc\u00e9s de Islay, famoso por su fuerte sabor ahumado y turba.",
-        "price": 59.99,
-        "image": "https://images.squarespace-cdn.com/content/v1/5f38598c878cfc0fee128041/412b8be4-d618-4f0a-a836-80c5670671a2/e42swpyaaerw0ww82nbb.jpg",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 48,
-        "name": "Cloudy Bay Sauvignon Blanc",
-        "description": "Un vino blanco neozeland\u00e9s, conocido por su frescura y sabores vibrantes de frutas tropicales.",
-        "price": 25.99,
-        "image": "https://www.cloudybay.com/drupal/sites/default/files/2022-10/cloudy-bay-wine-sauvignon-2022-product-gallery-1.png",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 49,
-        "name": "El Dorado 15 Year Old",
-        "description": "Ron de Guyana, envejecido durante 15 a\u00f1os, con un sabor suave y complejo.",
-        "price": 49.99,
-        "image": "https://theeldoradorum.com/images/Product/15YO-large.png",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 50,
-        "name": "Gordon's London Dry Gin",
-        "description": "Un gin cl\u00e1sico de Londres, conocido por su sabor limpio y equilibrado de enebro y c\u00edtricos.",
-        "price": 19.99,
-        "image": "http://crownwineandspirits.com/cdn/shop/products/gordon-s-gin-gordon-s-london-dry-gin-750ml-31515631976541.jpg?v=1664302212",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 51,
-        "name": "Talisker 10 Year Old",
-        "description": "Un whisky escoc\u00e9s de la isla de Skye, conocido por su sabor ahumado y picante.",
-        "price": 64.99,
-        "image": "https://www.thewhiskybarrel.com/pub/media/catalog/product/t/a/talisker-10-year-old_1.jpg?auto=webp&format=pjpg",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 52,
-        "name": "Opus One",
-        "description": "Un vino tinto californiano de alta gama, resultado de una colaboraci\u00f3n entre los productores de vino franceses y estadounidenses.",
-        "price": 350.0,
-        "image": "https://www.wine.com/product/images/w_600,h_600,dpr_2.0,c_fit,q_auto:good,fl_progressive/o0buiqs5t4vzgsicvckq.jpg",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 53,
-        "name": "Pampero Aniversario",
-        "description": "Ron venezolano, envejecido en barricas de roble para un sabor rico y suave.",
-        "price": 34.99,
-        "image": "https://www.pampero.com/assets/img/rums-bg/Aniversario.png",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 54,
-        "name": "Empress 1908 Gin",
-        "description": "Un gin canadiense, conocido por su color azul vibrante y sabor equilibrado de bot\u00e1nicos.",
-        "price": 39.99,
-        "image": "https://empressgin.com/wp-content/uploads/2023/08/us-spirits-header-1-1600x1200.webp",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 55,
-        "name": "Springbank 10 Year Old",
-        "description": "Un whisky escoc\u00e9s de Campbeltown, conocido por su sabor complejo y equilibrado.",
-        "price": 69.99,
-        "image": "https://static.whiskybase.com/storage/whiskies/9/2/832/240141-big.jpg",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 56,
-        "name": "Bodega Catena Zapata Malbec",
-        "description": "Un vino tinto argentino, conocido por su profundidad de sabor y elegancia.",
-        "price": 24.99,
-        "image": "https://www.mercadodevinos.com.ar/wp-content/uploads/2017/01/vino-catena-zapata-malbec-argentino.jpg",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 57,
-        "name": "Appleton Estate 12 Year Old Rare Blend",
-        "description": "Ron jamaicano premium, envejecido durante 12 a\u00f1os para un sabor complejo y suave.",
-        "price": 39.99,
-        "image": "https://img.thewhiskyexchange.com/900/rum_app26.jpg",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 58,
-        "name": "Gin Mare",
-        "description": "Un gin espa\u00f1ol, conocido por su uso de bot\u00e1nicos mediterr\u00e1neos como la oliva arbequina, tomillo y romero.",
-        "price": 36.99,
-        "image": "https://www.blackwellswines.com/cdn/shop/products/6F1F7776-8A8F-45C2-A9B0-E87F6CE2FB59_1_201_a_2000x.jpg?v=1590544656",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 59,
-        "name": "Aberlour 12 Year Old",
-        "description": "Un whisky escoc\u00e9s de malta, conocido por su sabor rico y afrutado con notas de jerez y chocolate.",
-        "price": 49.99,
-        "image": "https://img.thewhiskyexchange.com/900/ablob.12yov10.jpg",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 60,
-        "name": "Robert Mondavi Napa Valley Cabernet Sauvignon",
-        "description": "Un vino tinto californiano, conocido por su estructura y profundidad de sabor.",
-        "price": 35.99,
-        "image": "https://www.wine.com/product/images/w_600,h_600,dpr_2.0,c_fit,q_auto:good,fl_progressive/bt7wzqpmkvxvueelbudz.jpg",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 61,
-        "name": "Zaya Gran Reserva 16 Year Old",
-        "description": "Ron de Trinidad y Tobago, envejecido durante 16 a\u00f1os para un sabor rico y complejo.",
-        "price": 44.99,
-        "image": "https://cdn11.bigcommerce.com/s-gr83s/images/stencil/1280x1280/products/3980/9048/Z_gran_reserv__79109.1644275710.jpg?c=2",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 62,
-        "name": "Hayman's Old Tom Gin",
-        "description": "Un gin ingl\u00e9s de estilo Old Tom, conocido por su ligero dulzor y perfil de sabor equilibrado.",
-        "price": 28.99,
-        "image": "https://alpenz-web-product-bottle.s3.amazonaws.com/old_tom.bottle.jpg",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 63,
-        "name": "Bruichladdich Classic Laddie",
-        "description": "Un whisky escoc\u00e9s sin turba de la isla de Islay, conocido por su sabor fresco y complejo.",
-        "price": 59.99,
-        "image": "https://images.squarespace-cdn.com/content/v1/61affa9c931dc960c27460a1/9c2eea1c-e965-4cb4-bfc6-cba6e3189830/Bruichladdic_Classic_01.jpg",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 64,
-        "name": "Ch\u00e2teau Lynch-Bages Pauillac",
-        "description": "Un vino tinto franc\u00e9s de Burdeos, conocido por su estructura y longevidad.",
-        "price": 120.0,
-        "image": "https://www.plummarket.com/store/pub/media/catalog/product/cache/49722c31a15eff463262c631eda6cffe/2/3/23905_2_2_1_2.jpg",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 65,
-        "name": "Diplom\u00e1tico Mantuano",
-        "description": "Ron venezolano, conocido por su sabor suave y complejo, ideal para c\u00f3cteles y disfrutar solo.",
-        "price": 29.99,
-        "image": "https://www.rondiplomatico.com/wp-content/uploads/2022/03/mantuano_nueva@2x.png",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 66,
-        "name": "Tanqueray Rangpur",
-        "description": "Un gin de la casa Tanqueray, destilado con limas Rangpur para un sabor c\u00edtrico \u00fanico.",
-        "price": 32.99,
-        "image": "https://whiskypedia.com.ar/wp-content/uploads/2023/01/Tanqueray-rangpur-final.jpg.webp",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 67,
-        "name": "Redbreast 12 Year Old",
-        "description": "Un whisky irland\u00e9s de pot still, conocido por su sabor rico y complejo con notas de frutas y especias.",
-        "price": 64.99,
-        "image": "https://www.celticwhiskeyshop.com/image/2022Alyson/Redbreast_12_Year_Single_Pot_Still.png",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 68,
-        "name": "Mo\u00ebt & Chandon Dom P\u00e9rignon",
-        "description": "Un champ\u00e1n franc\u00e9s de lujo, conocido por su elegancia y complejidad.",
-        "price": 180.0,
-        "image": "https://static.millesima.com/s3/attachements/h1000px/3462_NM_cc.png",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 69,
-        "name": "Ron Zacapa Centenario 23",
-        "description": "Ron guatemalteco de alta gama, envejecido mediante el sistema solera para un sabor rico y complejo.",
-        "price": 69.99,
-        "image": "https://www.zacaparum.com/static/images/zacapa-no-23.png",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 70,
-        "name": "Hendrick's Gin",
-        "description": "Un gin escoc\u00e9s premium, destilado con pepino y p\u00e9talos de rosa para un sabor \u00fanico y fresco.",
-        "price": 38.99,
-        "image": "https://us.hendricksgin.com/assets/Uploads/9b56bfc193/HENDRI4__FillWzk3MCwxMDAwXQ.JPG",
-        "category": {
-            "id": "gin",
-            "name": "Gin"
-        }
-    },
-    {
-        "id": 71,
-        "name": "Macallan Sherry Oak 12 Year Old",
-        "description": "Un whisky escoc\u00e9s de malta, envejecido en barricas de jerez para un sabor rico y complejo.",
-        "price": 75.99,
-        "image": "https://cdn.webshopapp.com/shops/198134/files/364228641/macallan-macallan-12-years-old-2020-sherry-oak-cas.jpg",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 72,
-        "name": "Veuve Clicquot La Grande Dame",
-        "description": "Un champ\u00e1n franc\u00e9s de prestigio, conocido por su finura y complejidad.",
-        "price": 160.0,
-        "image": "https://www.veuveclicquot.com/on/demandware.static/-/Sites-mh-master/default/dwd7b4ba3d/images/large/veuve_clicquot/packshots/la-grande-dame-2015-bottle.png",
-        "category": {
-            "id": "vino",
-            "name": "Vino"
-        }
-    },
-    {
-        "id": 73,
-        "name": "Rhum Barbancourt 15 Year Old",
-        "description": "Ron haitiano de alta calidad, envejecido durante 15 a\u00f1os para un sabor suave y sofisticado.",
-        "price": 45.99,
-        "image": "https://drinkhacker.com/wp-content/uploads/2020/05/Barbancourt-15-Year-e1588370734581.jpg",
-        "category": {
-            "id": "ron",
-            "name": "Ron"
-        }
-    },
-    {
-        "id": 74,
-        "name": "Glenfiddich 18 Year Old",
-        "description": "Un whisky escoc\u00e9s de malta, envejecido durante 18 a\u00f1os para un sabor rico y complejo.",
-        "price": 99.99,
-        "image": "https://thirstie-prod.s3.us-east-1.amazonaws.com/cklb371qt0io6u0qsprywq613/attachments/cl5afw0vm0x420jq0ccqqnmwz-0083664990412-5.0.0.1500.1500.full.jpg",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
-    },
-    {
-        "id": 75,
-        "name": "Johnnie Walker Blue Label",
-        "description": "Una mezcla de whiskies escoceses raros y excepcionales, conocido por su suavidad y complejidad.",
-        "price": 199.99,
-        "image": "https://www.totalwine.com/dynamic/x1000,sq/media/sys_master/twmmedia/h45/hbd/14396701048862.png",
-        "category": {
-            "id": "whisky",
-            "name": "Whisky"
-        }
+        },
+        "stock": 11,
+        "tags": [
+            "recomendado",
+            "popular"
+        ]
     },
     {
         "id": 76,
         "name": "Fernet Branca",
         "description": "Un amaro italiano muy popular en Argentina, a menudo se consume con cola.",
-        "price": 25.99,
+        "price": 10.99,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fernet.jpg/1200px-Fernet.jpg",
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
+        },
+        "stock": 20,
+        "tags": [
+            "popular",
+            "clásico",
+            "argentino"
+        ]
     },
     {
         "id": 77,
         "name": "Branca Menta",
         "description": "Variante del Fernet Branca con un sabor a menta refrescante.",
-        "price": 27.99,
+        "price": 9.99,
         "image": "https://cdn.diffords.com/contrib/bws/2024/02/65bcdc2d6ec35.jpg",
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
+        },
+        "stock": 15,
+        "tags": [
+            "refrescante",
+            "popular",
+            "argentino"
+        ]
     },
     {
         "id": 78,
         "name": "Fernet 1882",
         "description": "Otra variante del Fernet muy apreciada en Argentina por su sabor equilibrado.",
-        "price": 26.99,
+        "price": 5.99,
         "image": "http://latinwinesonline.com/cdn/shop/products/fernet03_1200x1200.jpg?v=1527227219",
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
+        },
+        "stock": 12,
+        "tags": [
+            "argentino",
+            "recomendado",
+            "equilibrado"
+        ]
     },
     {
         "id": 79,
         "name": "Whisky DYC",
-        "description": "Whisky espa\u00f1ol de sabor suave y dulce, popular en Argentina.",
+        "description": "Whisky español de sabor suave y dulce, popular en Argentina.",
         "price": 29.99,
         "image": "https://images.squarespace-cdn.com/content/v1/61affa9c931dc960c27460a1/b46f09bb-b1eb-4fe4-a5b4-b55fe10e8083/DYC+-+1+copy.jpg",
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
+        },
+        "stock": 10,
+        "tags": [
+            "suave",
+            "popular",
+            "argentino"
+        ]
     },
     {
         "id": 80,
         "name": "Familia Gascón",
         "description": "Vino tinto argentino conocido por su sabor afrutado y especiado.",
-        "price": 22.99,
+        "price": 5.99,
         "image": "https://www.espaciovino.com.ar/media/default/0001/61/thumb_60603_default_medium.jpeg",
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
+        },
+        "stock": 18,
+        "tags": [
+            "afrutado",
+            "argentino",
+            "recomendado"
+        ]
     },
     {
         "id": 81,
         "name": "Gin Mare",
-        "description": "Un gin espanol, conocido por su uso de bot\u00e1nicos mediterr\u00e1neos como la oliva arbequina, tomillo y romero.",
+        "description": "Un gin español, conocido por su uso de botánicos mediterráneos como la oliva arbequina, tomillo y romero.",
         "price": 36.99,
         "image": "https://www.blackwellswines.com/cdn/shop/products/6F1F7776-8A8F-45C2-A9B0-E87F6CE2FB59_1_201_a_2000x.jpg?v=1590544656",
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
+        },
+        "stock": 8,
+        "tags": [
+            "mediterráneo",
+            "botánico",
+            "recomendado"
+        ]
     },
     {
         "id": 82,
         "name": "Old Smuggler",
-        "description": "Whisky escoc\u00e9s de mezcla suave, disfrutado en Argentina por su asequibilidad y sabor.",
-        "price": 24.99,
-        "image": "https://www.winesandmoreri.com/images/labels/old-smuggler-blended-scotch.jpg",
+        "description": "Whisky escocés de mezcla suave, disfrutado en Argentina por su asequibilidad y sabor.",
+        "price": 3.99,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/5/59/Old_Smuggler_Scotch_whisky.jpg",
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
+        },
+        "stock": 0,
+        "tags": [
+            "asequible",
+            "saludable",
+            "popular"
+        ]
+    },
+    {
+        "id": 75,
+        "name": "Johnnie Walker Blue Label",
+        "description": "Una mezcla de whiskies escoceses raros y excepcionales, conocido por su suavidad y complejidad.",
+        "price": 399.99,
+        "image": "https://www.totalwine.com/dynamic/x1000,sq/media/sys_master/twmmedia/h45/hbd/14396701048862.png",
+        "category": {
+            "id": "whisky",
+            "name": "Whisky"
+        },
+        "stock": 5,
+        "tags": [
+            "elixir",
+            "legendario",
+            "blue label"
+        ]
     },
     {
         "id": 83,
         "name": "Gancia",
         "description": "Vermouth italiano que se ha vuelto popular en Argentina, a menudo se bebe solo o en cocteles.",
-        "price": 18.99,
+        "price": 4.99,
         "image": "https://viinarannasta.eu/91-superlarge_default/Gancia_Asti_7_5__75cl.jpg",
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
+        },
+        "stock": 16,
+        "tags": [
+            "cocteles",
+            "popular",
+            "clásico"
+        ]
     },
     {
         "id": 84,
         "name": "Campari",
         "description": "Amaro italiano conocido por su sabor amargo y su uso en cocteles como el Negroni.",
-        "price": 24.99,
+        "price": 4.79,
         "image": "https://www.bittersandbottles.com/cdn/shop/products/campari-aperitivo-liqueur_1200x1200.jpg?v=1576220973",
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
-    },
-    {
-        "id": 85,
-        "name": "Legui",
-        "description": "Licor de hierbas argentino, a menudo consumido solo o en cocteles.",
-        "price": 19.99,
-        "image": "https://cdn11.bigcommerce.com/s-3stx4pub31/images/stencil/1280x1280/products/2785/6843/be01249__35506.1654300624.jpg?c=2",
-        "category": {
-            "id": "argento",
-            "name": "Argento"
-        }
+        },
+        "stock": 14,
+        "tags": [
+            "amargo",
+            "cocteles",
+            "clásico"
+        ]
     },
     {
         "id": 86,
@@ -943,6 +381,12 @@
         "category": {
             "id": "argento",
             "name": "Argento"
-        }
+        },
+        "stock": 5,
+        "tags": [
+            "asequible",
+            "argentino",
+            "blends"
+        ]
     }
 ]

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
 import React from 'react'
 import products from "../data/products.json"
 import ItemCard from '../components/ItemCard'
+import { colores } from '../global/colores'
 
 
 const ProductsScreen = () => {
@@ -14,16 +15,27 @@ const ProductsScreen = () => {
                     <Image
                         source={{ uri: item.image }}
                         style={styles.productImage}
-                        resizeMode="contain"
+                        resizeMode="cover"
                     />
                 </View>
                 <View style={styles.productTextContainer}>
                     <Text style={styles.productTitle}>{item.name}</Text>
                     <Text style={styles.productDesc}>{item.description}</Text>
+                    <View style={styles.tagView}>
+                        {
+                            <FlatList 
+                            style={styles.tags}
+                            data={item.tags}
+                            keyExtractor={()=>Math.random()}
+                            renderItem= {({item})=>(<Text style={styles.tagsText}> {item} </Text>)}
+                            />
+                        }
 
-                    <View style={styles.productPriceContainer}>
-                        <Text style={styles.productPrice}>{item.price}</Text>
                     </View>
+                    {
+                        item.stock<=0 && <Text style={styles.sinStockText}>Sin Stock</Text>
+                    }
+                    <Text style={styles.price}>Precio: $ {item.price}</Text>
                 </View>
 
             </ItemCard>
@@ -48,29 +60,51 @@ export default ProductsScreen
 
 const styles = StyleSheet.create({
     productContainer: {
+        borderRadius: 10,
         padding: 10,
         margin: 7,
         marginHorizontal: 15,
         flexDirection: "row",
         alignItems: "center",
     },
-    productImage: {
-        height: 90,
-        width: 40,
-    },
     productTextContainer: {
-        marginHorizontal: 7,
-        paddingHorizontal: 7,
         padding: 10,
-        gap: 10,
     },
-    productTitle: {
-        fontSize: 18,
-        paddingHorizontal: 7,
-        marginHorizontal: 7,
+    productImage: {
+        borderRadius: 10,
+        height: 120,
+        width: 70,
     },
     productDesc: {
-        paddingHorizontal: 7,
-        marginHorizontal: 7,
-    }
+        textAlign: 'left',
+        width: 260,
+    },
+    productTitle: {
+        paddingVertical: 5,
+        fontSize: 18,
+        fontFamily: 'PlayfairDisplay',
+    },
+    tags: {
+        flexDirection: 'row',
+    },  
+    tagsText: {
+        fontFamily: 'Cursiva',
+        fontSize: 32,
+    },
+    tagView: {
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    price: {
+        fontWeight: 'bold',
+        backgroundColor: colores.doradoApagado,
+        borderRadius: 10,
+        marginVertical: 5,
+        padding: 5,
+        alignSelf: 'flex-start',
+    },
+    sinStockText: {
+        fontWeight: 'bold',
+        color: colores.borgona,
+    },
 })

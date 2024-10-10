@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
         backgroundColor: colores.mainTheme,
     },
     title: {
+        fontFamily: 'PlayfairDisplay',
         fontSize: 18,
-        fontWeight: 'bold',
         color: colores.blancoApagado,
         alignSelf: 'center',
     }
