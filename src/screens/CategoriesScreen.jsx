@@ -38,6 +38,7 @@ export default CategoriesScreen
 
 const styles = StyleSheet.create({
     flatCardContainer: {
+        borderRadius: 10,
         justifyContent: "space-between",
         alignItems: "center",
         flexDirection: 'row-reverse',

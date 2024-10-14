@@ -1,17 +1,25 @@
-import { StyleSheet, Text, View, FlatList, Image, Pressable } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Image, Pressable, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import productos from "../data/products.json"
 import ItemCard from '../components/ItemCard'
 import { colores } from '../global/colores'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Search from '../components/Search'
 
 
 const ProductsScreen = ({categoryDown, setCategoryUp}) => {
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const [search, setSearch] = useState("");
+
 
     useEffect(()=> {
         const productsFilter = productos.filter((producto) => producto.category.id === categoryDown)
         setFilteredProducts(productsFilter)
-    },[categoryDown]);
+        if (search) {
+            const productsSearch = productsFilter.filter(product => product.name?.toLowerCase().includes(search?.toLowerCase()));
+            setFilteredProducts(productsSearch);
+        }
+    },[categoryDown, search]);
 
     
 
@@ -52,7 +60,8 @@ const ProductsScreen = ({categoryDown, setCategoryUp}) => {
 
     return (
         <>
-            <Pressable onPress={()=>setCategoryUp("")}><Text  style={styles.backButton} >Volver</Text></Pressable>
+            <Pressable onPress={()=>setCategoryUp("")}><Icon style={styles.iconoAtras} name='arrow-back-ios-new' size={20} color={colores.mainTheme} /></Pressable>
+            <Search setSearch={setSearch}/>
             <FlatList
                 data={filteredProducts}
                 keyExtractor={item => item.id}
@@ -113,8 +122,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: colores.borgona,
     },
-    backButton: {
-        padding: 7,
-        fontSize: 18,
+    iconoAtras: {
+        margin: 10,
     },
 })
