@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Search from '../components/Search'
 
 
-const ProductsScreen = ({categoryDown, setCategoryUp}) => {
+const ProductsScreen = ({categoryDown, setCategoryUp, setProductId}) => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [search, setSearch] = useState("");
 
@@ -25,6 +25,7 @@ const ProductsScreen = ({categoryDown, setCategoryUp}) => {
 
     const renderProductItem = ({ item }) => {
         return (
+            <Pressable onPress={()=>setProductId(item.id)}>
             <ItemCard style={styles.productContainer}>
                 <View>
 
@@ -55,6 +56,7 @@ const ProductsScreen = ({categoryDown, setCategoryUp}) => {
                 </View>
 
             </ItemCard>
+            </Pressable>
         )
     }
 
