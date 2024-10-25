@@ -2,13 +2,17 @@ import { StyleSheet, Text, View, FlatList, Image, Pressable} from 'react-native'
 import React from 'react'
 import categories from '../data/categories.json'
 import ItemCard from '../components/ItemCard'
+import { useWindowDimensions } from 'react-native';
+import { colores } from '../global/colores';
 
-const CategoriesScreen = ({setCategory}) => {
+const CategoriesScreen = ({navigation}) => {
+
+    const {width, height} = useWindowDimensions()
 
     const renderCategoryItem = ({item}) => {
         return (
             
-            <Pressable onPress={()=>setCategory(item.id)}>
+            <Pressable onPress={()=>navigation.navigate('Products', item.id)}>
             <ItemCard style={styles.flatCardContainer}>
                 {/* La prop de children dentro de ItemCard responde a todo lo que ponemos dentro de la etiqueta componente */}
                 <Image
@@ -24,7 +28,6 @@ const CategoriesScreen = ({setCategory}) => {
 
   return (
     <View style={styles.categoriesContainer}>
-        <Text style={styles.categoriasContainerTitulo}>Categorias</Text>
       <FlatList
         data={categories}
         keyExtractor={item=>item.id}
@@ -38,6 +41,7 @@ export default CategoriesScreen
 
 const styles = StyleSheet.create({
     flatCardContainer: {
+        marginTop: 10,
         borderRadius: 10,
         justifyContent: "space-between",
         alignItems: "center",
@@ -55,9 +59,4 @@ const styles = StyleSheet.create({
     categoryTitle: {
         fontSize: 30,
     },
-    categoriasContainerTitulo: {
-        margin: 10,
-        marginHorizontal: 10,
-        fontSize: 18,
-    }
 })

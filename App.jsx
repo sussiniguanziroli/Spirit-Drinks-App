@@ -7,6 +7,7 @@ import ProductScreen from './src/screens/ProductScreen';
 import Header from './src/components/Header';
 import ProductsScreen from './src/screens/ProductsScreen';
 import { useEffect, useState } from 'react';
+import Navigator from './src/navigation/Navigator';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,19 +35,7 @@ export default function App() {
     return (
 
         <>
-        <Header />
-        {
-            productId
-            ?
-            <ProductScreen productId={productId} />
-            :
-            category
-            ?
-            <ProductsScreen setProductId={setProductId} setCategoryUp={setCategory} categoryDown={category}/>
-            :
-            <CategoriesScreen setCategory={setCategory}/>
-        }
-        
+        <Navigator />
         <StatusBar style="auto" />
         </>
         
