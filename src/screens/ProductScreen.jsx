@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, ScrollView, Image, useWindowDimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colores } from '../global/colores'
@@ -8,27 +8,153 @@ import products from '../data/products.json'
 const ProductScreen = ({navigation,  route }) => {
 
     const [productFound, setProductFound] = useState({});
+    const { width, height } = useWindowDimensions();
+    const [categoriaEncontrada, setCategoriaEncontrada] = useState('');
 
     const productId = route.params
     // Se hace el use effect con el metodo find para traer el objeto entero del producto, ya que sino estariamos trayendo unicamente el id, no toda la info.
+
 
     useEffect(()=> {
         setProductFound(products.find(product=>product.id === productId))
     },[])
 
+    useEffect(() => {
+        // Método para extraer el name de la categoría
+        const obtenerNombreCategoria = (producto) => {
+          return producto.category ? producto.category.name : 'Sin categoría';
+        };
+    
+        // Llama al método y actualiza el estado
+        setCategoriaEncontrada(obtenerNombreCategoria(productFound));
+      }, [productFound]);
+    
+
 
   return (
-    <View>
-        <Pressable onPress={()=>navigation.goBack()}><Icon style={styles.iconoAtras} name='arrow-back-ios-new' size={20} color={colores.mainTheme} /></Pressable>
-      <Text>{productFound.name}</Text>
+    <ScrollView style={styles.productContainer}>
+    <Pressable onPress={() => navigation.goBack()}><Icon style={styles.goBack} name="arrow-back-ios" size={24} /></Pressable>
+    <Text style={styles.textBrand}>{categoriaEncontrada}</Text>
+    <Text style={styles.textTitle}>{productFound.name}</Text>
+    <Image
+        source={{ uri: productFound.image }}
+        alt={productFound.name}
+        width='100%'
+        height={width * .7}
+        resizeMode='contain'
+    />
+    <Text style={styles.longDescription}>{productFound.description}</Text>
+    <View style={styles.tagsContainer}>
+        <View style={styles.tags}>
+            <Text style={styles.tagText}>Tags : </Text>
+            {
+                /* <FlatList
+                    style={styles.tags}
+                    data={productFound.tags}
+                    keyExtractor={() => Math.random()}
+                    renderItem={({ item }) => (<Text style={styles.tagText}>{item}</Text>)}
+                /> */
+                productFound.tags?.map(tag => <Text key={Math.random()} style={styles.tagText}>{tag}</Text>)
+            }
+        </View>
+
+        {
+            productFound.discount > 0 && <View style={styles.discount}><Text style={styles.discountText}>- {productFound.discount} %</Text></View>
+        }
     </View>
+    {
+        productFound.stock <= 0 && <Text style={styles.noStockText}>Sin Stock</Text>
+    }
+    <Text style={styles.price}>Precio: $ {productFound.price}</Text>
+    <Pressable
+        style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
+        //style={styles.addToCartButton} 
+        onPress={() => dispatch(addItem({ ...productFound, quantity: 1 }))}>
+        <Text style={styles.textAddToCart}>Agregar al carrito</Text>
+    </Pressable>
+</ScrollView>
   )
 }
 
 export default ProductScreen
 
 const styles = StyleSheet.create({
-    iconoAtras: {
+    goBack: {
         margin: 10,
+        color: colores.mainTheme
     },
+    productContainer: {
+        paddingHorizontal: 16
+    },
+    textBrand: {
+        color: colores.doradoApagado,
+    },
+    textTitle: {
+        fontSize: 24,
+        fontWeight: '700'
+    },
+    longDescription: {
+        fontSize: 16,
+        textAlign: 'justify',
+        paddingVertical: 8,
+    },
+    tagsContainer: {
+        flexDirection: 'row',
+        gap: 5,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginVertical: 8
+    },
+    tags: {
+        flexDirection: 'row',
+        gap: 5,
+    },
+    tagText: {
+        //fontFamily:"Montserrat",
+        fontWeight: '600',
+        fontSize: 14,
+        color: colores.mainTheme
+    },
+    price: {
+        fontWeight: '800',
+        fontSize: 18
+    },
+    discount: {
+        backgroundColor: colores.doradoApagado,
+        width: 64,
+        height: 64,
+        //padding: 8,
+        borderRadius: 64,
+        //alignSelf: 'flex-start',
+    },
+    discountText: {
+        color: colores.blancoApagado,
+        /* position:'absolute',
+        top:16,
+        left: 16, */
+        textAlign: 'center',
+        verticalAlign: 'center'
+    },
+    noStockText: {
+        color: 'red'
+    },
+    price: {
+        fontSize: 24,
+        fontWeight: '700',
+        alignSelf: 'center',
+        paddingVertical: 16
+    },
+    addToCartButton: {
+        padding: 8,
+        paddingHorizontal: 16,
+        backgroundColor: colores.mainTheme,
+        borderRadius: 16,
+        marginVertical: 16
+    },
+    textAddToCart: {
+        color: colores.blancoApagado,
+        fontSize: 24,
+        textAlign: 'center',
+
+    }
 })

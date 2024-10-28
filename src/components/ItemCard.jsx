@@ -17,9 +17,9 @@ export default ItemCard
 const styles = StyleSheet.create({
     cardContainer: {
         backgroundColor: colores.grisClaro,
-        shadowColor: colores.doradoApagado,
+        shadowColor: "#000000",
         shadowOpacity: 1,
-        shadowRadius:1,
+        shadowRadius:.5,
         shadowOffset: {width: 3, height:5,},
         elevation:5,
     },
