@@ -24,21 +24,21 @@ const TabNavigator = () => {
                     name="Shop"
                     component={ShopNavigator}
                     options={{
-                        tabBarIcon: ({ focused }) => (<Icon name='store' size="25" color={focused?colores.doradoApagado:colores.blancoApagado} />),
+                        tabBarIcon: ({ focused }) => (<Icon name='store' size={25} color={focused?colores.doradoApagado:colores.blancoApagado} />),
                     }}
                 />
                 <Tab.Screen
                     name="Cart"
                     component={CartNavigator}
                     options={{
-                        tabBarIcon: ({ focused }) => (<Icon name="shopping-cart" size="25" color={focused?colores.doradoApagado:colores.blancoApagado} />)
+                        tabBarIcon: ({ focused }) => (<Icon name="shopping-cart" size={25} color={focused?colores.doradoApagado:colores.blancoApagado} />)
                     }}
                 />
                 <Tab.Screen
                     name="Receipts"
                     component={ReceiptsNavigator}store
                     options={{
-                    tabBarIcon: ({ focused }) => (<Icon name="receipt" size="25" color={focused?colores.doradoApagado:colores.blancoApagado} />)
+                    tabBarIcon: ({ focused }) => (<Icon name="receipt" size={25} color={focused?colores.doradoApagado:colores.blancoApagado} />)
                     }}
                 />
             </Tab.Navigator>
