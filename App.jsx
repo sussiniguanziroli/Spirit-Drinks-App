@@ -2,12 +2,8 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'
 
 import { StatusBar } from 'expo-status-bar';
-import CategoriesScreen from './src/screens/CategoriesScreen';
-import ProductScreen from './src/screens/ProductScreen';
-import Header from './src/components/Header';
-import ProductsScreen from './src/screens/ProductsScreen';
-import { useEffect, useState } from 'react';
-import Navigator from './src/navigation/Navigator';
+import { useEffect, useState } from 'react'; 
+import TabNavigator from './src/navigation/TabNavigator';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,7 +31,7 @@ export default function App() {
     return (
 
         <>
-        <Navigator />
+        <TabNavigator />
         <StatusBar style="auto" />
         </>
         
