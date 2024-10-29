@@ -5,12 +5,13 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react'; 
 import TabNavigator from './src/navigation/TabNavigator';
 
+import { store } from './src/app/store';
+import { Provider } from 'react-redux';
+
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
 
-    const [category, setCategory] = useState("");
-    const [productId, setProductId] = useState("");
 
     const [loaded, error] = useFonts({
         'PlayfairDisplay': require('./assets/fonts/PlayfairDisplay-VariableFont_wght.ttf'),
@@ -30,10 +31,10 @@ export default function App() {
 
     return (
 
-        <>
-        <TabNavigator />
-        <StatusBar style="auto" />
-        </>
+        <Provider store={store}>
+            <TabNavigator />
+            <StatusBar style="auto" />
+        </Provider>
         
 
     );

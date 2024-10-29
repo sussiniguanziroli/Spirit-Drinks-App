@@ -1,40 +1,47 @@
-import { StyleSheet, Text, View, FlatList, Image, Pressable} from 'react-native'
+import { StyleSheet, Text, View, FlatList, Image, Pressable } from 'react-native'
 import React from 'react'
-import categories from '../data/categories.json'
 import ItemCard from '../components/ItemCard'
 import { useWindowDimensions } from 'react-native';
-import { colores } from '../global/colores';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategory } from '../features/shop/shopSlice';
 
-const CategoriesScreen = ({navigation}) => {
+const CategoriesScreen = ({ navigation }) => {
 
-    const {width, height} = useWindowDimensions()
+    const { width, height } = useWindowDimensions()
 
-    const renderCategoryItem = ({item}) => {
+    const categories = useSelector(state => state.shopReducer.value.categories)
+
+    const dispatch = useDispatch();
+
+    const renderCategoryItem = ({ item }) => {
         return (
-            
-            <Pressable onPress={()=>navigation.navigate('Products', item.id)}>
-            <ItemCard style={styles.flatCardContainer}>
-                {/* La prop de children dentro de ItemCard responde a todo lo que ponemos dentro de la etiqueta componente */}
-                <Image
-                    source={{uri:item.image}}
-                    style={styles.image}
-                    resizeMode= "contain"
-                />
-                <Text style={styles.categoryTitle}>{item.name}</Text>
-            </ItemCard>
+
+            <Pressable onPress={() => {
+                dispatch(setCategory(item.id))//item.id es action.payload
+                navigation.navigate('Products')
+            }}>
+                <ItemCard style={styles.flatCardContainer}>
+                    {/* La prop de children dentro de ItemCard responde a todo lo que ponemos dentro de la etiqueta componente */}
+                    <Image
+                        source={{ uri: item.image }}
+                        style={styles.image}
+                        resizeMode="contain"
+                    />
+                    <Text style={styles.categoryTitle}>{item.name}</Text>
+                </ItemCard>
             </Pressable>
         )
     }
 
-  return (
-    <View style={styles.categoriesContainer}>
-      <FlatList
-        data={categories}
-        keyExtractor={item=>item.id}
-        renderItem={renderCategoryItem}
-      />
-    </View>
-  )
+    return (
+        <View style={styles.categoriesContainer}>
+            <FlatList
+                data={categories}
+                keyExtractor={item => item.id}
+                renderItem={renderCategoryItem}
+            />
+        </View>
+    )
 }
 
 export default CategoriesScreen

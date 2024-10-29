@@ -1,70 +1,67 @@
 import { StyleSheet, Text, View, FlatList, Image, Pressable, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import productos from "../data/products.json"
 import ItemCard from '../components/ItemCard'
 import { colores } from '../global/colores'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Search from '../components/Search'
+import { useSelector } from 'react-redux'
 
 
-const ProductsScreen = ({navigation, route }) => {
+const ProductsScreen = ({ navigation, route }) => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [search, setSearch] = useState("");
 
-    const categoryDown = route.params
-
-    useEffect(()=> {
-        const productsFilter = productos.filter((producto) => producto.category.id === categoryDown)
-        setFilteredProducts(productsFilter)
+    const filteredProductsByCategory = useSelector(state => state.shopReducer.value.filteredProductsByCategory)
+    useEffect(() => {
+        setFilteredProducts(filteredProductsByCategory)
         if (search) {
-            const productsSearch = productsFilter.filter(product => product.name?.toLowerCase().includes(search?.toLowerCase()));
-            setFilteredProducts(productsSearch);
+            setFilteredProducts(filteredProductsByCategory.filter(product => product.name.toLowerCase().includes(search.toLowerCase())));
         }
-    },[categoryDown, search]);
+    }, [search]);
 
-    
+
 
     const renderProductItem = ({ item }) => {
         return (
-            <Pressable onPress={()=>navigation.navigate("Product" ,item.id)}>
-            <ItemCard style={styles.productContainer}>
-                <View>
+            <Pressable onPress={() => navigation.navigate("Product", item.id)}>
+                <ItemCard style={styles.productContainer}>
+                    <View>
 
-                    <Image
-                        source={{ uri: item.image }}
-                        style={styles.productImage}
-                        resizeMode="cover"
-                    />
-                </View>
-                <View style={styles.productTextContainer}>
-                    <Text style={styles.productTitle}>{item.name}</Text>
-                    <Text style={styles.productDesc}>{item.description}</Text>
-                    <View style={styles.tagView}>
-                        {
-                            <FlatList 
-                            style={styles.tags}
-                            data={item.tags}
-                            keyExtractor={()=>Math.random()}
-                            renderItem= {({item})=>(<Text style={styles.tagsText}> {item} </Text>)}
-                            />
-                        }
-
+                        <Image
+                            source={{ uri: item.image }}
+                            style={styles.productImage}
+                            resizeMode="cover"
+                        />
                     </View>
-                    {
-                        item.stock<=0 && <Text style={styles.sinStockText}>Sin Stock</Text>
-                    }
-                    <Text style={styles.price}>Precio: $ {item.price}</Text>
-                </View>
+                    <View style={styles.productTextContainer}>
+                        <Text style={styles.productTitle}>{item.name}</Text>
+                        <Text style={styles.productDesc}>{item.description}</Text>
+                        <View style={styles.tagView}>
+                            {
+                                <FlatList
+                                    style={styles.tags}
+                                    data={item.tags}
+                                    keyExtractor={() => Math.random()}
+                                    renderItem={({ item }) => (<Text style={styles.tagsText}> {item} </Text>)}
+                                />
+                            }
 
-            </ItemCard>
+                        </View>
+                        {
+                            item.stock <= 0 && <Text style={styles.sinStockText}>Sin Stock</Text>
+                        }
+                        <Text style={styles.price}>Precio: $ {item.price}</Text>
+                    </View>
+
+                </ItemCard>
             </Pressable>
         )
     }
 
     return (
         <>
-            <Pressable onPress={()=>navigation.goBack()}><Icon style={styles.iconoAtras} name='arrow-back-ios-new' size={20} color={colores.mainTheme} /></Pressable>
-            <Search setSearch={setSearch}/>
+            <Pressable onPress={() => navigation.goBack()}><Icon style={styles.iconoAtras} name='arrow-back-ios-new' size={20} color={colores.mainTheme} /></Pressable>
+            <Search setSearch={setSearch} />
             <FlatList
                 data={filteredProducts}
                 keyExtractor={item => item.id}
@@ -104,7 +101,7 @@ const styles = StyleSheet.create({
     },
     tags: {
         flexDirection: 'row',
-    },  
+    },
     tagsText: {
         fontFamily: 'Cursiva',
         fontSize: 32,
