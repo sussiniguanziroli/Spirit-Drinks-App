@@ -4,12 +4,15 @@ import ItemCard from '../components/ItemCard'
 import { colores } from '../global/colores'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Search from '../components/Search'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setProductId } from '../features/shop/shopSlice';
 
 
 const ProductsScreen = ({ navigation, route }) => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [search, setSearch] = useState("");
+
+    const dispatch = useDispatch();
 
     const filteredProductsByCategory = useSelector(state => state.shopReducer.value.filteredProductsByCategory)
     useEffect(() => {
@@ -23,7 +26,10 @@ const ProductsScreen = ({ navigation, route }) => {
 
     const renderProductItem = ({ item }) => {
         return (
-            <Pressable onPress={() => navigation.navigate("Product", item.id)}>
+            <Pressable onPress={() => 
+                {dispatch(setProductId(item.id))
+                navigation.navigate("Product")}}
+            >
                 <ItemCard style={styles.productContainer}>
                     <View>
 

@@ -9,17 +9,22 @@ export const shopSlice = createSlice({
             categories : categories,
             products: products,
             categorySelected: "",
-            filteredProductsByCategory: []
+            filteredProductsByCategory: [],
+            productIdSelected: null
         }
     },
     reducers: {
         setCategory: (state, action) => {
             state.value.filteredProductsByCategory = products.filter(product => product.category.id.toLowerCase() === action.payload.toLowerCase())
             state.categorySelected = action.payload
+        },
+        setProductId: (state, action) => {
+            state.value.productIdSelected = products.find(product=>product.id === action.payload)
         }
     }
 })
 
 export const {setCategory} = shopSlice.actions;
+export const {setProductId} = shopSlice.actions;
 
 export default shopSlice.reducer

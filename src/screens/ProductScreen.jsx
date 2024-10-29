@@ -2,22 +2,18 @@ import { StyleSheet, Text, View, Pressable, ScrollView, Image, useWindowDimensio
 import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colores } from '../global/colores'
-import products from '../data/products.json'
+import { useSelector } from 'react-redux'
 
 
 const ProductScreen = ({navigation,  route }) => {
 
-    const [productFound, setProductFound] = useState({});
     const { width, height } = useWindowDimensions();
     const [categoriaEncontrada, setCategoriaEncontrada] = useState('');
 
-    const productId = route.params
+    //const productId = route.params
     // Se hace el use effect con el metodo find para traer el objeto entero del producto, ya que sino estariamos trayendo unicamente el id, no toda la info.
+    const productFound = useSelector(state => state.shopReducer.value.productIdSelected)
 
-
-    useEffect(()=> {
-        setProductFound(products.find(product=>product.id === productId))
-    },[])
 
     useEffect(() => {
         // Método para extraer el name de la categoría
