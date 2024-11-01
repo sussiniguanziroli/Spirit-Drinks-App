@@ -1,0 +1,1 @@
+export const base_url = "https://spirit-drinks-default-rtdb.firebaseio.com/";

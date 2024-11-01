@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Image, Pressable, TextInput } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Image, Pressable, TextInput, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ItemCard from '../components/ItemCard'
 import { colores } from '../global/colores'
@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Search from '../components/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProductId } from '../features/shop/shopSlice';
+import { useGetProductsByCategoryQuery } from '../services/shopService';
 
 
 const ProductsScreen = ({ navigation, route }) => {
@@ -14,7 +15,14 @@ const ProductsScreen = ({ navigation, route }) => {
 
     const dispatch = useDispatch();
 
-    const filteredProductsByCategory = useSelector(state => state.shopReducer.value.filteredProductsByCategory)
+    const category = useSelector(state => state.shopReducer.value.categorySelected);
+
+    console.log("caregoty", category);
+    console.log("filtered p", filteredProductsByCategory);
+
+    const { data: filteredProductsByCategory, error, isLoading } = useGetProductsByCategoryQuery(category);
+
+
     useEffect(() => {
         setFilteredProducts(filteredProductsByCategory)
         if (search) {
@@ -26,9 +34,10 @@ const ProductsScreen = ({ navigation, route }) => {
 
     const renderProductItem = ({ item }) => {
         return (
-            <Pressable onPress={() => 
-                {dispatch(setProductId(item.id))
-                navigation.navigate("Product")}}
+            <Pressable onPress={() => {
+                dispatch(setProductId(item.id))
+                navigation.navigate("Product")
+            }}
             >
                 <ItemCard style={styles.productContainer}>
                     <View>
@@ -66,13 +75,29 @@ const ProductsScreen = ({ navigation, route }) => {
 
     return (
         <>
-            <Pressable onPress={() => navigation.goBack()}><Icon style={styles.iconoAtras} name='arrow-back-ios-new' size={20} color={colores.mainTheme} /></Pressable>
-            <Search setSearch={setSearch} />
-            <FlatList
-                data={filteredProducts}
-                keyExtractor={item => item.id}
-                renderItem={renderProductItem}
-            />
+
+            {
+                isLoading
+                    ?
+                    <View style={styles.ActivityIndicatorView}>
+                        <ActivityIndicator size="large" color={colores.mainTheme} />
+                    </View>
+                    :
+                    error
+                        ?
+                        <Text>Error al cargar los productos</Text>
+                        :
+                        <>
+                            <Pressable onPress={() => navigation.goBack()}><Icon style={styles.iconoAtras} name='arrow-back-ios-new' size={20} color={colores.mainTheme} /></Pressable>
+                            <Search setSearch={setSearch} />
+                            <FlatList
+                                data={filteredProducts}
+                                keyExtractor={item => item.id}
+                                renderItem={renderProductItem}
+                            />
+                        </>
+            }
+
         </>
     )
 }
@@ -131,4 +156,10 @@ const styles = StyleSheet.create({
     iconoAtras: {
         margin: 10,
     },
+    ActivityIndicatorView: {
+        height: '100%',
+        alignSelf: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 })
