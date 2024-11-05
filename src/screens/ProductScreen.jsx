@@ -5,7 +5,7 @@ import { colores } from '../global/colores'
 import { useSelector } from 'react-redux'
 
 
-const ProductScreen = ({navigation,  route }) => {
+const ProductScreen = ({ navigation, route }) => {
 
     const { width, height } = useWindowDimensions();
     const [categoriaEncontrada, setCategoriaEncontrada] = useState('');
@@ -18,58 +18,60 @@ const ProductScreen = ({navigation,  route }) => {
     useEffect(() => {
         // Método para extraer el name de la categoría
         const obtenerNombreCategoria = (producto) => {
-          return producto.category ? producto.category.name : 'Sin categoría';
+            return producto.category ? producto.category.name : 'Sin categoría';
         };
-    
+
         // Llama al método y actualiza el estado
         setCategoriaEncontrada(obtenerNombreCategoria(productFound));
-      }, [productFound]);
-    
+    }, [productFound]);
 
 
-  return (
-    <ScrollView style={styles.productContainer}>
-    <Pressable onPress={() => navigation.goBack()}><Icon style={styles.goBack} name="arrow-back-ios" size={24} /></Pressable>
-    <Text style={styles.textBrand}>{categoriaEncontrada}</Text>
-    <Text style={styles.textTitle}>{productFound.name}</Text>
-    <Image
-        source={{ uri: productFound.image }}
-        alt={productFound.name}
-        width='100%'
-        height={width * .7}
-        resizeMode='contain'
-    />
-    <Text style={styles.longDescription}>{productFound.description}</Text>
-    <View style={styles.tagsContainer}>
-        <View style={styles.tags}>
-            <Text style={styles.tagText}>Tags : </Text>
+
+    return (
+        <ScrollView style={styles.productContainer}>
+            <Pressable onPress={() => navigation.goBack()}><Icon style={styles.goBack} name="arrow-back-ios" size={24} /></Pressable>
+            <Text style={styles.textBrand}>{categoriaEncontrada}</Text>
+            <Text style={styles.textTitle}>{productFound.name}</Text>
+            <View style={styles.imageView}>
+                <Image
+                    source={{ uri: productFound.image }}
+                    alt={productFound.name}
+                    width='100%'
+                    height={width * .7}
+                    resizeMode='contain'
+                />
+            </View>
+            <Text style={styles.longDescription}>{productFound.description}</Text>
+            <View style={styles.tagsContainer}>
+                <View style={styles.tags}>
+                    <Text style={styles.tagText}>Tags : </Text>
+                    {
+                        /* <FlatList
+                            style={styles.tags}
+                            data={productFound.tags}
+                            keyExtractor={() => Math.random()}
+                            renderItem={({ item }) => (<Text style={styles.tagText}>{item}</Text>)}
+                        /> */
+                        productFound.tags?.map(tag => <Text key={Math.random()} style={styles.tagText}>{tag}</Text>)
+                    }
+                </View>
+
+                {
+                    productFound.discount > 0 && <View style={styles.discount}><Text style={styles.discountText}>- {productFound.discount} %</Text></View>
+                }
+            </View>
             {
-                /* <FlatList
-                    style={styles.tags}
-                    data={productFound.tags}
-                    keyExtractor={() => Math.random()}
-                    renderItem={({ item }) => (<Text style={styles.tagText}>{item}</Text>)}
-                /> */
-                productFound.tags?.map(tag => <Text key={Math.random()} style={styles.tagText}>{tag}</Text>)
+                productFound.stock <= 0 && <Text style={styles.noStockText}>Sin Stock</Text>
             }
-        </View>
-
-        {
-            productFound.discount > 0 && <View style={styles.discount}><Text style={styles.discountText}>- {productFound.discount} %</Text></View>
-        }
-    </View>
-    {
-        productFound.stock <= 0 && <Text style={styles.noStockText}>Sin Stock</Text>
-    }
-    <Text style={styles.price}>Precio: $ {productFound.price}</Text>
-    <Pressable
-        style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
-        //style={styles.addToCartButton} 
-        onPress={() => dispatch(addItem({ ...productFound, quantity: 1 }))}>
-        <Text style={styles.textAddToCart}>Agregar al carrito</Text>
-    </Pressable>
-</ScrollView>
-  )
+            <Text style={styles.price}>Precio: $ {productFound.price}</Text>
+            <Pressable
+                style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
+                //style={styles.addToCartButton} 
+                onPress={() => dispatch(addItem({ ...productFound, quantity: 1 }))}>
+                <Text style={styles.textAddToCart}>Agregar al carrito</Text>
+            </Pressable>
+        </ScrollView>
+    )
 }
 
 export default ProductScreen
@@ -152,5 +154,8 @@ const styles = StyleSheet.create({
         fontSize: 24,
         textAlign: 'center',
 
+    },
+    imageView: {
+        marginVertical: 17,
     }
 })
