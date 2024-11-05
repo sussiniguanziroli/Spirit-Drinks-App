@@ -2,7 +2,8 @@ import { StyleSheet, Text, View, Pressable, ScrollView, Image, useWindowDimensio
 import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colores } from '../global/colores'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { addItem } from '../features/cart/cartSlice';
 
 
 const ProductScreen = ({ navigation, route }) => {
@@ -10,19 +11,13 @@ const ProductScreen = ({ navigation, route }) => {
     const { width, height } = useWindowDimensions();
     const [categoriaEncontrada, setCategoriaEncontrada] = useState('');
 
-    //const productId = route.params
-    // Se hace el use effect con el metodo find para traer el objeto entero del producto, ya que sino estariamos trayendo unicamente el id, no toda la info.
+    const dispatch = useDispatch();
+    
     const productFound = useSelector(state => state.shopReducer.value.productIdSelected)
 
 
     useEffect(() => {
-        // Método para extraer el name de la categoría
-        const obtenerNombreCategoria = (producto) => {
-            return producto.category ? producto.category.name : 'Sin categoría';
-        };
-
-        // Llama al método y actualiza el estado
-        setCategoriaEncontrada(obtenerNombreCategoria(productFound));
+        setCategoriaEncontrada(productFound.category.name);
     }, [productFound]);
 
 
@@ -66,8 +61,7 @@ const ProductScreen = ({ navigation, route }) => {
             <Text style={styles.price}>Precio: $ {productFound.price}</Text>
             <Pressable
                 style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
-                //style={styles.addToCartButton} 
-                onPress={() => dispatch(addItem({ ...productFound, quantity: 1 }))}>
+                onPress={() => dispatch(addItem(productFound))}>
                 <Text style={styles.textAddToCart}>Agregar al carrito</Text>
             </Pressable>
         </ScrollView>

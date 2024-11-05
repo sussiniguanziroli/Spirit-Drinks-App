@@ -10,8 +10,6 @@ import { useGetCategoriesQuery } from '../services/shopService';
 const CategoriesScreen = ({ navigation }) => {
 
 
-    //const categories = useSelector(state => state.shopReducer.value.categories)
-
     const { data: categories, error, isLoading } = useGetCategoriesQuery();
 
     const dispatch = useDispatch();
