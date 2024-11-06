@@ -4,15 +4,16 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colores } from '../global/colores'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../features/cart/cartSlice';
+import { useGetProductQuery } from '../services/shopService';
 
 
-const ProductScreen = ({ navigation, route }) => {
+const ProductScreen = ({ navigation }) => {
 
     const { width, height } = useWindowDimensions();
     const [categoriaEncontrada, setCategoriaEncontrada] = useState('');
 
     const dispatch = useDispatch();
-    
+
     const productFound = useSelector(state => state.shopReducer.value.productIdSelected)
 
 
@@ -61,7 +62,7 @@ const ProductScreen = ({ navigation, route }) => {
             <Text style={styles.price}>Precio: $ {productFound.price}</Text>
             <Pressable
                 style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
-                onPress={() => dispatch(addItem(productFound))}>
+                onPress={() => dispatch(addItem({ ...productFound, cantidad: 1 }))}>
                 <Text style={styles.textAddToCart}>Agregar al carrito</Text>
             </Pressable>
         </ScrollView>
