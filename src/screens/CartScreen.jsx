@@ -3,20 +3,25 @@ import React from 'react'
 import { colores } from '../global/colores';
 import ItemCard from '../components/ItemCard';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { useSelector } from 'react-redux';
+import { clearCart } from '../features/cart/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-const CartScreen = () => {
+const CartScreen = ({navigation}) => {
 
 
     const total = useSelector(state => state.cartReducer.value.total);
     const cart = useSelector(state => state.cartReducer.value.cartItems);
 
+    const dispatch = useDispatch();
+
 
     const FooterComponent = () => {
         return (
             <View style={styles.footerContainer}>
-                <Text style={styles.footerTotal}>Total: $  {total}</Text>
-                <Pressable style={styles.confirmButton}>
+                <Text style={styles.footerTotal}>Total: $  {total.toFixed(2)}</Text>
+                <Pressable style={styles.confirmButton}
+                    onPress={() => {dispatch(clearCart())
+                    navigation.navigate("Receipts")}}>
                     <Text style={styles.confirmButtonText}>Confirmar</Text>
                 </Pressable>
             </View>

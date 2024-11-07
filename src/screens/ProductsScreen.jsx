@@ -9,7 +9,7 @@ import { setProductId } from '../features/shop/shopSlice';
 import { useGetProductsByCategoryQuery } from '../services/shopService';
 
 
-const ProductsScreen = ({ navigation, route }) => {
+const ProductsScreen = ({ navigation }) => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [search, setSearch] = useState("");
 
@@ -25,9 +25,7 @@ const ProductsScreen = ({ navigation, route }) => {
         if (search) {
             setFilteredProducts(filteredProductsByCategory.filter(product => product.name.toLowerCase().includes(search.toLowerCase())));
         }
-    }, [search]);
-
-
+    }, [search, filteredProductsByCategory]);
 
     const renderProductItem = ({ item }) => {
         return (

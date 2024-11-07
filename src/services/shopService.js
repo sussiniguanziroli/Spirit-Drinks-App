@@ -22,7 +22,7 @@ export const shopApi = createApi({
                 response ? Object.values(response): [])
         }),
         getProduct: builder.query({
-            query: (productId) => `products.json?orderBy="id"&equalTo=${productId}`,
+            query: (productIdSelected) => `products.json?orderBy="id"&equalTo=${productIdSelected}`,
             transformResponse: (response) => response ? Object.values(response)[0]: []
         }),
     }),

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, ScrollView, Image, useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, View, Pressable, ScrollView, Image, useWindowDimensions, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colores } from '../global/colores'
@@ -7,65 +7,67 @@ import { addItem } from '../features/cart/cartSlice';
 import { useGetProductQuery } from '../services/shopService';
 
 
+
 const ProductScreen = ({ navigation }) => {
 
     const { width, height } = useWindowDimensions();
-    const [categoriaEncontrada, setCategoriaEncontrada] = useState('');
+
+    const productIdSelected = useSelector(state=>state.shopReducer.value.productIdSelected)
+    const { data: productFound, error, isLoading } = useGetProductQuery(productIdSelected);
 
     const dispatch = useDispatch();
 
-    const productFound = useSelector(state => state.shopReducer.value.productIdSelected)
-
-
-    useEffect(() => {
-        setCategoriaEncontrada(productFound.category.name);
-    }, [productFound]);
-
-
-
     return (
-        <ScrollView style={styles.productContainer}>
-            <Pressable onPress={() => navigation.goBack()}><Icon style={styles.goBack} name="arrow-back-ios" size={24} /></Pressable>
-            <Text style={styles.textBrand}>{categoriaEncontrada}</Text>
-            <Text style={styles.textTitle}>{productFound.name}</Text>
-            <View style={styles.imageView}>
-                <Image
-                    source={{ uri: productFound.image }}
-                    alt={productFound.name}
-                    width='100%'
-                    height={width * .7}
-                    resizeMode='contain'
-                />
-            </View>
-            <Text style={styles.longDescription}>{productFound.description}</Text>
-            <View style={styles.tagsContainer}>
-                <View style={styles.tags}>
-                    <Text style={styles.tagText}>Tags : </Text>
-                    {
-                        /* <FlatList
-                            style={styles.tags}
-                            data={productFound.tags}
-                            keyExtractor={() => Math.random()}
-                            renderItem={({ item }) => (<Text style={styles.tagText}>{item}</Text>)}
-                        /> */
-                        productFound.tags?.map(tag => <Text key={Math.random()} style={styles.tagText}>{tag}</Text>)
-                    }
-                </View>
-
-                {
-                    productFound.discount > 0 && <View style={styles.discount}><Text style={styles.discountText}>- {productFound.discount} %</Text></View>
-                }
-            </View>
+        <>
             {
-                productFound.stock <= 0 && <Text style={styles.noStockText}>Sin Stock</Text>
+                isLoading
+                    ?
+                    <View style={styles.ActivityIndicatorView}>
+                        <ActivityIndicator size="large" color={colores.mainTheme} />
+                    </View>
+                    :
+                    error
+                        ?
+                        <Text>Error al cargar producto</Text>
+                        :
+                        < ScrollView style={styles.productContainer}>
+                            <Pressable onPress={() => navigation.goBack()}><Icon style={styles.goBack} name="arrow-back-ios" size={24} /></Pressable>
+                            <Text style={styles.textBrand}>{productFound.category.name}</Text>
+                            <Text style={styles.textTitle}>{productFound.name}</Text>
+                            <View style={styles.imageView}>
+                                <Image
+                                    source={{ uri: productFound.image }}
+                                    alt={productFound.name}
+                                    width='100%'
+                                    height={width * .7}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <Text style={styles.longDescription}>{productFound.description}</Text>
+                            <View style={styles.tagsContainer}>
+                                <View style={styles.tags}>
+                                    <Text style={styles.tagText}>Tags : </Text>
+                                    {
+                                        productFound.tags?.map(tag => <Text key={Math.random()} style={styles.tagText}>{tag}</Text>)
+                                    }
+                                </View>
+
+                                {
+                                    productFound.discount > 0 && <View style={styles.discount}><Text style={styles.discountText}>- {productFound.discount} %</Text></View>
+                                }
+                            </View>
+                            {
+                                productFound.stock <= 0 && <Text style={styles.noStockText}>Sin Stock</Text>
+                            }
+                            <Text style={styles.price}>Precio: $ {productFound.price}</Text>
+                            <Pressable
+                                style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
+                                onPress={() => dispatch(addItem({ ...productFound, cantidad: 1 }))}>
+                                <Text style={styles.textAddToCart}>Agregar al carrito</Text>
+                            </Pressable>
+                        </ScrollView >
             }
-            <Text style={styles.price}>Precio: $ {productFound.price}</Text>
-            <Pressable
-                style={({ pressed }) => [{ opacity: pressed ? 0.95 : 1 }, styles.addToCartButton]}
-                onPress={() => dispatch(addItem({ ...productFound, cantidad: 1 }))}>
-                <Text style={styles.textAddToCart}>Agregar al carrito</Text>
-            </Pressable>
-        </ScrollView>
+        </>
     )
 }
 
@@ -152,5 +154,11 @@ const styles = StyleSheet.create({
     },
     imageView: {
         marginVertical: 17,
+    },
+    ActivityIndicatorView: {
+        height: '100%',
+        alignSelf: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })
