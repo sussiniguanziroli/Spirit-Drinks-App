@@ -4,13 +4,13 @@ import Header from '../components/Header';
 
 const Stack = createNativeStackNavigator();
 
-const ProfileNavigator = () => {
+const ProfileNavigator = () => (
     <Stack.Navigator
     screenOptions={{
         header: ({ route }) => <Header subtitle={route.name} />
       }}>
         <Stack.Screen name='Perfil' component={ProfileScreen} />
     </Stack.Navigator>
-}
+)
 
 export default ProfileNavigator

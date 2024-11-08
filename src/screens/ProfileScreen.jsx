@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet, Image, Picker, ScrollView } from 'react-native';
+import { View, Text, TextInput, Pressable, StyleSheet, Image, ScrollView } from 'react-native';
 import { colores } from '../global/colores';
 import * as ImagePicker from 'expo-image-picker';
+import { Picker } from '@react-native-picker/picker';
+import CameraIcon from '../components/CameraIcon';
+import { useSelector } from 'react-redux';
 
 const ProfileScreen = () => {
+
+    const user = useSelector(state=>state.authReducer.value.email)
+
     const [profileImage, setProfileImage] = useState(null);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -34,15 +40,24 @@ const ProfileScreen = () => {
         <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.title}>Mi Perfil</Text>
 
-            <Pressable onPress={pickImage}>
-                <View style={styles.imageContainer}>
-                    {profileImage ? (
-                        <Image source={{ uri: profileImage }} style={styles.profileImage} />
-                    ) : (
-                        <Text style={styles.imagePlaceholder}>Añadir Foto</Text>
-                    )}
-                </View>
-            </Pressable>
+
+            <View style={styles.imageProfileContainer}>
+                {
+                    profileImage
+                        ?
+                        <Image source={{ uri: profileImage }} resizeMode='cover' style={styles.profileImage} />
+                        :
+                        <Text style={styles.textProfilePlaceHolder}>{user.charAt(0).toUpperCase()}</Text>
+                }
+                <Pressable onPress={pickImage} style={({ pressed }) => [{ opacity: pressed ? 0.90 : 1 }, styles.cameraIcon]} >
+                    <CameraIcon />
+                </Pressable>
+            </View>
+
+
+
+
+
 
             <TextInput
                 style={styles.input}
@@ -100,7 +115,7 @@ const ProfileScreen = () => {
                 <Picker.Item label="Experto" value="experto" />
             </Picker>
 
-            <Pressable 
+            <Pressable
                 style={({ pressed }) => [
                     styles.saveButton,
                     { backgroundColor: pressed ? colores.verdeOscuro : colores.verdeEsmeralda },
@@ -132,8 +147,8 @@ const styles = StyleSheet.create({
         height: 120,
         borderRadius: 60,
         backgroundColor: colores.grisClaro,
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
         marginBottom: 20,
     },
     profileImage: {
@@ -176,6 +191,33 @@ const styles = StyleSheet.create({
         color: colores.blancoApagado,
         fontWeight: 'bold',
     },
+    imageProfileContainer: {
+        width: 128,
+        height: 128,
+        borderRadius: 128,
+        backgroundColor: colores.blancoApagado,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 20,
+    },
+    textProfilePlaceHolder: {
+        color: colores.verdeOscuro,
+        fontSize: 48,
+    },
+    profileData: {
+        paddingVertical: 16,
+        fontSize: 16
+    },
+    cameraIcon: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+    },
+    profileImage: {
+        width: 128,
+        height: 128,
+        borderRadius: 128
+    }
 });
 
 export default ProfileScreen;

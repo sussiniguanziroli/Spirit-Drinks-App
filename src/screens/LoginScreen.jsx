@@ -70,6 +70,13 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={styles.link} onPress={() => navigation.navigate('SignUp')}> Crear una</Text>
             </Text>
 
+            <Pressable onPress={()=>dispatch(setUser({email:"demo@mundogeek.com",token:"demo"}))}>
+                <Text style={styles.guestText}>
+                    ¿Sólo quieres dar un vistazo?
+                    <Text style={styles.guestLink}> Ingresa como invitado</Text>
+                </Text>
+            </Pressable>
+
             
         </View>
     );
