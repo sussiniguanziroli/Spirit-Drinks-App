@@ -5,12 +5,14 @@ import ItemCard from '../components/ItemCard';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { clearCart } from '../features/cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { usePostReceiptMutation } from '../services/receiptsService';
 
 const CartScreen = ({navigation}) => {
 
 
     const total = useSelector(state => state.cartReducer.value.total);
     const cart = useSelector(state => state.cartReducer.value.cartItems);
+    const [triggerPost, result] = usePostReceiptMutation();
 
     const dispatch = useDispatch();
 
@@ -18,10 +20,12 @@ const CartScreen = ({navigation}) => {
     const FooterComponent = () => {
         return (
             <View style={styles.footerContainer}>
-                <Text style={styles.footerTotal}>Total: $  {total.toFixed(2)}</Text>
+                <Text style={styles.footerTotal}>Total: $  {total}</Text>
                 <Pressable style={styles.confirmButton}
-                    onPress={() => {dispatch(clearCart())
-                    navigation.navigate("Receipts")}}>
+                    onPress={() => {triggerPost({cart, total, createdAt: Date.now()})
+                    dispatch(clearCart())
+                    navigation.navigate("Receipts")
+                    }}>
                     <Text style={styles.confirmButtonText}>Confirmar</Text>
                 </Pressable>
             </View>

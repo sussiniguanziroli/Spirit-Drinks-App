@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { NavigationContainer } from "@react-navigation/native";
 import ShopNavigator from "./ShopNavigator";
 import CartNavigator from "./CartNavigator";
 import ReceiptsNavigator from "./ReceiptsNavigator";
@@ -11,38 +10,36 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
     return (
-        <NavigationContainer>
-            <Tab.Navigator
-                initialRouteName="Shop"
-                screenOptions={{
-                    headerShown: false,
-                    tabBarShowLabel: false,
-                    tabBarStyle: styles.tabBar
+        <Tab.Navigator
+            initialRouteName="Shop"
+            screenOptions={{
+                headerShown: false,
+                tabBarShowLabel: false,
+                tabBarStyle: styles.tabBar
+            }}
+        >
+            <Tab.Screen
+                name="Shop"
+                component={ShopNavigator}
+                options={{
+                    tabBarIcon: ({ focused }) => (<Icon name='store' size={25} color={focused ? colores.doradoApagado : colores.blancoApagado} />),
                 }}
-            >
-                <Tab.Screen
-                    name="Shop"
-                    component={ShopNavigator}
-                    options={{
-                        tabBarIcon: ({ focused }) => (<Icon name='store' size={25} color={focused?colores.doradoApagado:colores.blancoApagado} />),
-                    }}
-                />
-                <Tab.Screen
-                    name="Cart"
-                    component={CartNavigator}
-                    options={{
-                        tabBarIcon: ({ focused }) => (<Icon name="shopping-cart" size={25} color={focused?colores.doradoApagado:colores.blancoApagado} />)
-                    }}
-                />
-                <Tab.Screen
-                    name="Receipts"
-                    component={ReceiptsNavigator}store
-                    options={{
-                    tabBarIcon: ({ focused }) => (<Icon name="receipt" size={25} color={focused?colores.doradoApagado:colores.blancoApagado} />)
-                    }}
-                />
-            </Tab.Navigator>
-        </NavigationContainer>
+            />
+            <Tab.Screen
+                name="Cart"
+                component={CartNavigator}
+                options={{
+                    tabBarIcon: ({ focused }) => (<Icon name="shopping-cart" size={25} color={focused ? colores.doradoApagado : colores.blancoApagado} />)
+                }}
+            />
+            <Tab.Screen
+                name="Receipts"
+                component={ReceiptsNavigator} store
+                options={{
+                    tabBarIcon: ({ focused }) => (<Icon name="receipt" size={25} color={focused ? colores.doradoApagado : colores.blancoApagado} />)
+                }}
+            />
+        </Tab.Navigator>
     )
 }
 
