@@ -8,7 +8,7 @@ export const cartSlice = createSlice({
             cartItems: [],
             user: "demo",
             total: null,
-            cartLenght:0,
+            cartLength:0,
             updatedAt: Date.now().toLocaleString() //unix timestamp
         }
     },
@@ -17,7 +17,7 @@ export const cartSlice = createSlice({
             const productInCart = state.value.cartItems.find(item => item.id === action.payload.id)
             if(!productInCart){
                 state.value.cartItems.push(action.payload) //ac.pay es el producto
-                state.value.cartLenght += 1
+                state.value.cartLength += 1
             } else {
                 state.value.cartItems.map(item => {
                     if(item.id === action.payload.id){
@@ -39,12 +39,12 @@ export const cartSlice = createSlice({
         removeItem: (state, action) => {
             state.value.cartItems = state.value.cartItems.filter(item = item.id !== action.payload)
             state.value.total = calculateTotalPrice(state.value.cartItems)
-            state.value.cartLenght -= 1
+            state.value.cartLength -= 1
         },
         clearCart: (state) => {
             state.value.cartItems=[]
             state.value.total=null
-            state.value.cartLenght = 0
+            state.value.cartLength = 0
         }
     }
 

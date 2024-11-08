@@ -1,20 +1,52 @@
 import React from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import { colores } from '../global/colores';
+import { useLoginMutation } from '../services/authService';
+import { setUser } from '../features/auth/authSlice';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 
 const LoginScreen = ({ navigation }) => {
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const dispatch = useDispatch()
+
+    const [triggerLogin, result] = useLoginMutation()
+
+
+    useEffect(()=>{
+        if(result.status==="rejected"){
+            console.log("Error al iniciar sesión", result)
+        }else if(result.status==="fulfilled"){
+            console.log("Usuario logueado con éxito")
+            dispatch(setUser(result.data))
+            
+        }
+        
+    },[result]) 
+
+    const onsubmit = ()=>{
+        //console.log(email,password)       
+        triggerLogin({email,password})
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.logo}>Spirit Drinks</Text>
             <Text style={styles.subtitle}>Login</Text>
 
             <TextInput
+                onChangeText={(text) => setEmail(text)}
                 style={styles.input}
                 placeholder="Email"
                 placeholderTextColor={colores.grisClaro}
             />
 
             <TextInput
+                onChangeText={(text) => setPassword(text)}
                 style={styles.input}
                 placeholder="Contraseña"
                 placeholderTextColor={colores.grisClaro}
@@ -27,8 +59,7 @@ const LoginScreen = ({ navigation }) => {
                     { backgroundColor: pressed ? colores.verdeOscuro : colores.verdeEsmeralda },
                 ]}
                 onPress={() => {
-                    // Acción de iniciar sesión
-                    console.log("Iniciar sesión presionado");
+                    onsubmit()
                 }}
             >
                 <Text style={styles.buttonText}>Iniciar sesión</Text>

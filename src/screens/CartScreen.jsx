@@ -7,9 +7,9 @@ import { clearCart } from '../features/cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePostReceiptMutation } from '../services/receiptsService';
 
-const CartScreen = ({navigation}) => {
+const CartScreen = ({ navigation }) => {
 
-
+    const cartLength = useSelector(state => state.cartReducer.value.cartLength);
     const total = useSelector(state => state.cartReducer.value.total);
     const cart = useSelector(state => state.cartReducer.value.cartItems);
     const [triggerPost, result] = usePostReceiptMutation();
@@ -22,9 +22,10 @@ const CartScreen = ({navigation}) => {
             <View style={styles.footerContainer}>
                 <Text style={styles.footerTotal}>Total: $  {total}</Text>
                 <Pressable style={styles.confirmButton}
-                    onPress={() => {triggerPost({cart, total, createdAt: Date.now()})
-                    dispatch(clearCart())
-                    navigation.navigate("Receipts")
+                    onPress={() => {
+                        triggerPost({ cart, total, createdAt: Date.now() })
+                        dispatch(clearCart())
+                        navigation.navigate("Receipts")
                     }}>
                     <Text style={styles.confirmButtonText}>Confirmar</Text>
                 </Pressable>
@@ -52,13 +53,23 @@ const CartScreen = ({navigation}) => {
     )
 
     return (
-        <FlatList
-            data={cart}
-            keyExtractor={item => item.id}
-            renderItem={renderCartItem}
-            ListHeaderComponent={<Text style={styles.cartScreenTitle}>Tu Carrito:</Text>}
-            ListFooterComponent={<FooterComponent />}
-        />
+        <>
+            {
+                cartLength > 0
+                    ?
+                    <FlatList
+                        data={cart}
+                        keyExtractor={item => item.id}
+                        renderItem={renderCartItem}
+                        ListHeaderComponent={<Text style={styles.cartScreenTitle}>Tu Carrito:</Text>}
+                        ListFooterComponent={<FooterComponent />}
+                    />
+                    :
+                    <View style={styles.cartLengthLectureView}>
+                        <Text style={styles.cartLengthLecture}>No hay productos en el carrito</Text>
+                    </View>
+            }
+        </>
     )
 }
 
@@ -121,5 +132,14 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         textAlign: "center",
         paddingVertical: 8
+    },
+    cartLengthLecture: {
+        alignSelf: 'center',
+        fontSize: 17,
+    },
+    cartLengthLectureView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
     }
 })
