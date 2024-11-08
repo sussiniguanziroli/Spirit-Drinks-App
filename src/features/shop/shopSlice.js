@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-//import categories from '../../data/categories.json'; viene directamente del service
 
 export const shopSlice = createSlice({
     name: 'shop',
