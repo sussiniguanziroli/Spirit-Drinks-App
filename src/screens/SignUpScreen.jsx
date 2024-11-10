@@ -21,7 +21,7 @@ const SignUpScreen = ({ navigation }) => {
             console.log("Error al agregar el usuario", result)
         } else if (result.status === "fulfilled") {
             console.log("Usuario agregado con exito")
-            dispatch(setUser({email:result.data}))
+            dispatch(setUser(result.data))
         }
     },[result])
 
