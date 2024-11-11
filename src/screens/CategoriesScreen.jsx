@@ -2,8 +2,7 @@ import { StyleSheet, Text, View, FlatList, Image, Pressable, ActivityIndicator }
 import React from 'react'
 import { colores } from '../global/colores';
 import ItemCard from '../components/ItemCard'
-import { useWindowDimensions } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setCategory } from '../features/shop/shopSlice';
 import { useGetCategoriesQuery } from '../services/shopService';
 

@@ -15,8 +15,10 @@ export default Header
 
 const styles = StyleSheet.create({
     headerContainer:{
-        height: 130,
-        justifyContent: "center",
+        flexDirection: 'row',
+        height: 80,
+        paddingHorizontal: 30,
+        justifyContent: "space-between",
         textAlign: "center",
         backgroundColor: colores.mainTheme,
     },
@@ -29,8 +31,8 @@ const styles = StyleSheet.create({
     subtitle: {
         alignSelf: 'center',
         marginTop: 5,
-        color: colores.blancoApagado,
-        fontSize: 20,
+        color: colores.verdeEsmeralda,
+        fontSize: 20, 
     }
 })
 

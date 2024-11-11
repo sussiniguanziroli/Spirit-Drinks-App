@@ -82,15 +82,17 @@ const ProductsScreen = ({ navigation }) => {
                         ?
                         <Text>Error al cargar los productos</Text>
                         :
-                        <>
-                            <Pressable onPress={() => navigation.goBack()}><Icon style={styles.iconoAtras} name='arrow-back-ios-new' size={20} color={colores.mainTheme} /></Pressable>
-                            <Search setSearch={setSearch} />
+                        <View>
+                            <View style={styles.toolView}>
+                                <Pressable onPress={() => navigation.goBack()}><Icon style={styles.iconoAtras} name='arrow-back-ios-new' size={20} color={colores.mainTheme} /></Pressable>
+                                <Search setSearch={setSearch} />
+                            </View>
                             <FlatList
                                 data={filteredProducts}
                                 keyExtractor={item => item.id}
                                 renderItem={renderProductItem}
                             />
-                        </>
+                        </View>
             }
 
         </>
@@ -156,5 +158,9 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    toolView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
 })
