@@ -18,16 +18,13 @@ const SignUpScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (result.status==="rejected") {
-            console.log("Error al agregar el usuario", result)
         } else if (result.status === "fulfilled") {
-            console.log("Usuario agregado con exito")
             dispatch(setUser(result.data))
         }
     },[result])
 
     const onSubmit = () => {
         console.log(username ,email, password, confirmPassword)
-
         triggerSignUp({
             email,
             password

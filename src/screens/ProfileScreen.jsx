@@ -85,8 +85,6 @@ const ProfileScreen = () => {
 
     const saveProfile = () => {
         triggerPutProfilePicture({profilePicture, localId})
-        // Lógica para guardar el perfil del usuario
-        console.log("Perfil guardado");
     };
 
     return (
@@ -167,7 +165,7 @@ const ProfileScreen = () => {
                     styles.saveButton,
                     { backgroundColor: pressed ? colores.verdeOscuro : colores.verdeEsmeralda },
                 ]}
-                onPress={()=> {triggerPutProfilePicture({profilePicture, localId})}}
+                onPress={saveProfile}
             >
                 <Text style={styles.saveButtonText}>Guardar Perfil</Text>
             </Pressable>

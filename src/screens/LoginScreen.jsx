@@ -19,13 +19,9 @@ const LoginScreen = ({ navigation }) => {
 
     useEffect(()=>{
         if(result.status==="rejected"){
-            console.log("Error al iniciar sesión", result)
         }else if(result.status==="fulfilled"){
-            console.log("Usuario logueado con éxito")
-            dispatch(setUser(result.data))
-            
+            dispatch(setUser(result.data))   
         }
-        
     },[result]) 
 
     const onsubmit = ()=>{
