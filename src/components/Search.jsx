@@ -1,18 +1,20 @@
-import { StyleSheet, Text, View, TextInput } from 'react-native'
-import { colores } from '../global/colores'
+import { StyleSheet, TextInput, useWindowDimensions } from 'react-native';
+import { colores } from '../global/colores';
 
+const Search = ({ setSearch }) => {
+    const { width } = useWindowDimensions();
+    const searchWidth = width * 0.86;
 
-const Search = ({setSearch}) => {
-  return (
-    <TextInput
-        placeholder='Buscar un producto'
-        onChangeText={(text)=> setSearch(text)}
-        style={styles.searchInput}
-    />
-  )
-}
+    return (
+        <TextInput
+            placeholder='Buscar un producto'
+            onChangeText={(text) => setSearch(text)}
+            style={[styles.searchInput, { width: searchWidth }]} // Aplica el ancho dinámico aquí
+        />
+    );
+};
 
-export default Search
+export default Search;
 
 const styles = StyleSheet.create({
     searchInput: {
@@ -23,4 +25,4 @@ const styles = StyleSheet.create({
         padding: 5,
         paddingLeft: 5,
     }
-})
+});

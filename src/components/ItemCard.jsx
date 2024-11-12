@@ -18,9 +18,9 @@ const styles = StyleSheet.create({
     cardContainer: {
         backgroundColor: colores.grisClaro,
         shadowColor: "#000000",
-        shadowOpacity: 1,
-        shadowRadius:.5,
-        shadowOffset: {width: 3, height:5,},
+        shadowOpacity: 0.2,
+        shadowRadius:.2,
+        shadowOffset: {width: 1, height:2,},
         elevation:5,
     },
 
