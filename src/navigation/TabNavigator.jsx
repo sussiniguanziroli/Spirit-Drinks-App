@@ -6,6 +6,7 @@ import { StyleSheet } from "react-native";
 import { colores } from "../global/colores";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ProfileNavigator from "./ProfileNavigator";
+import LocationsNavigator from "./LocationsNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +39,13 @@ const TabNavigator = () => {
                 component={ReceiptsNavigator} store
                 options={{
                     tabBarIcon: ({ focused }) => (<Icon name="receipt" size={25} color={focused ? colores.doradoApagado : colores.blancoApagado} />)
+                }}
+            />
+            <Tab.Screen
+                name="Locations"
+                component={LocationsNavigator} store
+                options={{
+                    tabBarIcon: ({ focused }) => (<Icon name="pin-drop" size={25} color={focused ? colores.doradoApagado : colores.blancoApagado} />)
                 }}
             />
             <Tab.Screen

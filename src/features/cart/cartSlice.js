@@ -36,10 +36,11 @@ export const cartSlice = createSlice({
                 updatedAt: new Date().toLocaleString()
             }
         },
-        removeItem: (state, action) => {
-            state.value.cartItems = state.value.cartItems.filter(item = item.id !== action.payload)
+        removeItem: (state,action)=>{
+            state.value.cartItems = state.value.cartItems.filter(item => item.id !== action.payload)
             state.value.total = calculateTotalPrice(state.value.cartItems)
             state.value.cartLength -= 1
+
         },
         clearCart: (state) => {
             state.value.cartItems=[]

@@ -3,7 +3,7 @@ import React from 'react'
 import { colores } from '../global/colores';
 import ItemCard from '../components/ItemCard';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { clearCart } from '../features/cart/cartSlice';
+import { clearCart, removeItem } from '../features/cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePostReceiptMutation } from '../services/receiptsService';
 
@@ -47,7 +47,11 @@ const CartScreen = ({ navigation }) => {
                 <Text style={styles.price}>Precio unitario: $ {item.price}</Text>
                 <Text stlyle={styles.quantity}>Cantidad: {item.cantidad}</Text>
                 <Text style={styles.total}>Subtotal: $ {item.cantidad * item.price}</Text>
-                <Icon name="delete" size={24} color="#FC7A5E" style={styles.trashIcon} />
+                <Pressable
+                    onPress={()=> {dispatch(removeItem())}}
+                >
+                    <Icon name="delete" size={24} color="#FC7A5E" style={styles.trashIcon} />
+                </Pressable>
             </View>
         </ItemCard>
     )
