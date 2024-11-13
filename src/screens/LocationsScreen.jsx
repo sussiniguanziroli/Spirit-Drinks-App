@@ -5,7 +5,7 @@ import { colores } from '../global/colores';
 import Toast from 'react-native-toast-message';
 import ItemCard from '../components/ItemCard';
 import MapView, {Marker} from 'react-native-maps';
-//import { geocoding_api_key } from '../firebase/database';
+import { geocoding_api_key } from '../firebase/config';
 
 import * as Location from 'expo-location';
 
@@ -66,7 +66,7 @@ const LocationsScreen = () => {
             let location = await Location.getCurrentPositionAsync({});
             if (location) {
                 const response = await fetch(
-                    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}&key=${process.env.EXPO_PUBLIC_GEOCODING_API_KEY}`
+                    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}&key=${geocoding_api_key}`
                 );
                 const data = await response.json()
                 //console.log(data)
