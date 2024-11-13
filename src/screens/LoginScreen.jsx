@@ -5,12 +5,14 @@ import { useLoginMutation } from '../services/authService';
 import { setUser } from '../features/auth/authSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import  Icon  from 'react-native-vector-icons/MaterialIcons';
 
 
 const LoginScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [rememberMe, setRememberMe] = useState(false);
 
     const dispatch = useDispatch()
 
@@ -60,7 +62,16 @@ const LoginScreen = ({ navigation }) => {
             >
                 <Text style={styles.buttonText}>Iniciar sesión</Text>
             </Pressable>
-
+            <View style={styles.rememberMeView}>
+                <Text style={styles.linkText}>Mantener Sesion Iniciada</Text>
+                {
+                    rememberMe
+                    ?
+                    <Pressable onPress={()=> setRememberMe(!rememberMe)}><Icon name="toggle-on" size={48} color={colores.verdeEsmeralda} /></Pressable>
+                    :
+                    <Pressable onPress={()=> setRememberMe(!rememberMe)}><Icon name="toggle-off" size={48} color={colores.doradoApagado} /></Pressable>
+                }
+            </View>
             <Text style={styles.linkText}>
                 ¿No tienes una cuenta?
                 <Text style={styles.link} onPress={() => navigation.navigate('SignUp')}> Crear una</Text>
@@ -130,6 +141,12 @@ const styles = StyleSheet.create({
         color: colores.verdeEsmeralda,
         fontWeight: 'bold',
     },
+    rememberMeView :{
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5,
+        marginVertical: 7,
+    }
 });
 
 export default LoginScreen;
