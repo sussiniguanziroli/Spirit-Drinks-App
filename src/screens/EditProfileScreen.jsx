@@ -1,90 +1,35 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet, Image, ScrollView, Alert } from 'react-native';
-import { colores } from '../global/colores';
-import * as ImagePicker from 'expo-image-picker';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useState } from 'react'
+import { colores } from '../global/colores'
 import { Picker } from '@react-native-picker/picker';
+import { useDispatch, useSelector } from 'react-redux';
 import CameraIcon from '../components/CameraIcon';
-import { useSelector, useDispatch } from 'react-redux';
-import { setProfilePicture } from '../features/auth/authSlice';
 import { usePutProfilePictureMutation } from '../services/userService';
 
-const ProfileScreen = ({navigation}) => {
+const EditProfileScreen = () => {
 
     const user = useSelector(state => state.authReducer.value.email)
     const profilePicture = useSelector(state => state.authReducer.value.profilePicture)
     const localId = useSelector(state=>state.authReducer.value.localId)
     const dispatch = useDispatch();
 
-    
+    const [triggerPutProfilePicture, result] = usePutProfilePictureMutation();
 
-    
-
-    const verifyPermissions = async () => {
-        const { granted: cameraGranted } = await ImagePicker.requestCameraPermissionsAsync();
-        const { granted: galleryGranted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-        if (!cameraGranted || !galleryGranted) {
-            Alert.alert("Permisos insuficientes", "Necesitas otorgar permisos de cámara y galería para continuar.", [{ text: "Ok" }]);
-            return false;
-        }
-        return true;
-    };
-
-    const pickImage = async () => {
-        const permissionOK = await verifyPermissions();
-        if (!permissionOK) return;
-
-        Alert.alert(
-            "Seleccionar imagen",
-            "¿Deseas tomar una foto o seleccionar de la galería?",
-            [
-                {
-                    text: "Cámara",
-                    onPress: async () => {
-                        let result = await ImagePicker.launchCameraAsync({
-                            mediaTypes: ImagePicker.MediaTypeOptions.All,
-                            allowsEditing: true,
-                            aspect: [1, 1],
-                            base64: true,
-                            quality: 1,
-                        });
-
-                        if (!result.canceled) {
-                            dispatch(setProfilePicture(`data:image/jpeg;base64,${result.assets[0].base64}`));
-                        }
-                    }
-                },
-                {
-                    text: "Galería",
-                    onPress: async () => {
-                        let result = await ImagePicker.launchImageLibraryAsync({
-                            mediaTypes: ImagePicker.MediaTypeOptions.All,
-                            allowsEditing: true,
-                            aspect: [1, 1],
-                            base64: true,
-                            quality: 1,
-                        });
-
-                        if (!result.canceled) {
-                            dispatch(setProfilePicture(`data:image/jpeg;base64,${result.assets[0].base64}`));
-                        }
-                    }
-                },
-                {
-                    text: "Cancelar",
-                    style: "cancel"
-                }
-            ]
-        );
+    const saveProfile = () => {
+        triggerPutProfilePicture({profilePicture, localId})
     };
 
 
-   
+    const [name, setName] = useState('');
+    const [location, setLocation] = useState('');
+    const [birthdate, setBirthdate] = useState('');
+    const [favoriteDrink, setFavoriteDrink] = useState('');
+    const [experienceLevel, setExperienceLevel] = useState('novato');
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Mi Perfil</Text>
 
+
+        <ScrollView contentContainerStyle={styles.container}>
 
             <View style={styles.imageProfileContainer}>
                 {
@@ -101,14 +46,77 @@ const ProfileScreen = ({navigation}) => {
                 </Pressable>
             </View>
 
+        
+
+
+
+
+
+
+
+            <TextInput
+                style={styles.input}
+                placeholder="Nombre"
+                placeholderTextColor={colores.grisClaro}
+                value={name}
+                onChangeText={setName}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Ubicación"
+                placeholderTextColor={colores.grisClaro}
+                value={location}
+                onChangeText={setLocation}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Fecha de nacimiento (DD/MM/AAAA)"
+                placeholderTextColor={colores.grisClaro}
+                value={birthdate}
+                onChangeText={setBirthdate}
+            />
+
+            <Text style={styles.label}>Preferencia de bebida:</Text>
+            <Picker
+                selectedValue={favoriteDrink}
+                onValueChange={(itemValue) => setFavoriteDrink(itemValue)}
+                style={styles.picker}
+            >
+                <Picker.Item label="Selecciona una opción" value="" />
+                <Picker.Item label="Cerveza" value="cerveza" />
+                <Picker.Item label="Vino" value="vino" />
+                <Picker.Item label="Whisky" value="whisky" />
+                <Picker.Item label="Tequila" value="tequila" />
+                <Picker.Item label="Vodka" value="vodka" />
+                <Picker.Item label="Ron" value="ron" />
+            </Picker>
+
+            <Text style={styles.label}>Nivel de experiencia:</Text>
+            <Picker
+                selectedValue={experienceLevel}
+                onValueChange={(itemValue) => setExperienceLevel(itemValue)}
+                style={styles.picker}
+            >
+                <Picker.Item label="Novato" value="novato" />
+                <Picker.Item label="Entusiasta" value="entusiasta" />
+                <Picker.Item label="Experto" value="experto" />
+            </Picker>
+
             <Pressable
-                onPress={() => {navigation.navigate("EditarPerfil")}}
-            ><Text>Editar Perfil</Text></Pressable>
-
-
+                style={({ pressed }) => [
+                    styles.saveButton,
+                    { backgroundColor: pressed ? colores.verdeOscuro : colores.verdeEsmeralda },
+                ]}
+                onPress={saveProfile}
+            >
+                <Text style={styles.saveButtonText}>Guardar Perfil</Text>
+            </Pressable>
         </ScrollView>
-    );
-};
+
+    )
+}
+
+export default EditProfileScreen
 
 const styles = StyleSheet.create({
     container: {
@@ -200,6 +208,4 @@ const styles = StyleSheet.create({
         height: 128,
         borderRadius: 128
     }
-});
-
-export default ProfileScreen;
+})
