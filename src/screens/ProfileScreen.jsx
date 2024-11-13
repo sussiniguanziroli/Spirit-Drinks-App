@@ -1,82 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet, Image, ScrollView, Alert } from 'react-native';
 import { colores } from '../global/colores';
-import * as ImagePicker from 'expo-image-picker';
-import { Picker } from '@react-native-picker/picker';
-import CameraIcon from '../components/CameraIcon';
-import { useSelector, useDispatch } from 'react-redux';
-import { setProfilePicture } from '../features/auth/authSlice';
-import { usePutProfilePictureMutation } from '../services/userService';
+import { useSelector} from 'react-redux';
 
 const ProfileScreen = ({navigation}) => {
 
     const user = useSelector(state => state.authReducer.value.email)
     const profilePicture = useSelector(state => state.authReducer.value.profilePicture)
-    const localId = useSelector(state=>state.authReducer.value.localId)
-    const dispatch = useDispatch();
-
     
 
     
 
-    const verifyPermissions = async () => {
-        const { granted: cameraGranted } = await ImagePicker.requestCameraPermissionsAsync();
-        const { granted: galleryGranted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
 
-        if (!cameraGranted || !galleryGranted) {
-            Alert.alert("Permisos insuficientes", "Necesitas otorgar permisos de cámara y galería para continuar.", [{ text: "Ok" }]);
-            return false;
-        }
-        return true;
-    };
-
-    const pickImage = async () => {
-        const permissionOK = await verifyPermissions();
-        if (!permissionOK) return;
-
-        Alert.alert(
-            "Seleccionar imagen",
-            "¿Deseas tomar una foto o seleccionar de la galería?",
-            [
-                {
-                    text: "Cámara",
-                    onPress: async () => {
-                        let result = await ImagePicker.launchCameraAsync({
-                            mediaTypes: ImagePicker.MediaTypeOptions.All,
-                            allowsEditing: true,
-                            aspect: [1, 1],
-                            base64: true,
-                            quality: 1,
-                        });
-
-                        if (!result.canceled) {
-                            dispatch(setProfilePicture(`data:image/jpeg;base64,${result.assets[0].base64}`));
-                        }
-                    }
-                },
-                {
-                    text: "Galería",
-                    onPress: async () => {
-                        let result = await ImagePicker.launchImageLibraryAsync({
-                            mediaTypes: ImagePicker.MediaTypeOptions.All,
-                            allowsEditing: true,
-                            aspect: [1, 1],
-                            base64: true,
-                            quality: 1,
-                        });
-
-                        if (!result.canceled) {
-                            dispatch(setProfilePicture(`data:image/jpeg;base64,${result.assets[0].base64}`));
-                        }
-                    }
-                },
-                {
-                    text: "Cancelar",
-                    style: "cancel"
-                }
-            ]
-        );
-    };
+    
 
 
    
@@ -96,9 +33,6 @@ const ProfileScreen = ({navigation}) => {
 
 
                 }
-                <Pressable onPress={() => { pickImage() }} style={({ pressed }) => [{ opacity: pressed ? 0.90 : 1 }, styles.cameraIcon]} >
-                    <CameraIcon />
-                </Pressable>
             </View>
 
             <Pressable

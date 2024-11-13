@@ -1,17 +1,28 @@
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { colores } from '../global/colores'
 import { Picker } from '@react-native-picker/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import CameraIcon from '../components/CameraIcon';
 import { usePutProfilePictureMutation } from '../services/userService';
+import * as ImagePicker from 'expo-image-picker';
+import { Alert } from 'react-native';
+import { setProfilePicture } from '../features/auth/authSlice'
 
-const EditProfileScreen = () => {
+
+
+const EditProfileScreen = ({navigation}) => {
 
     const user = useSelector(state => state.authReducer.value.email)
     const profilePicture = useSelector(state => state.authReducer.value.profilePicture)
     const localId = useSelector(state=>state.authReducer.value.localId)
+
     const dispatch = useDispatch();
+    const [name, setName] = useState('');
+    const [location, setLocation] = useState('');
+    const [birthdate, setBirthdate] = useState('');
+    const [favoriteDrink, setFavoriteDrink] = useState('');
+    const [experienceLevel, setExperienceLevel] = useState('novato');
 
     const [triggerPutProfilePicture, result] = usePutProfilePictureMutation();
 
@@ -20,11 +31,64 @@ const EditProfileScreen = () => {
     };
 
 
-    const [name, setName] = useState('');
-    const [location, setLocation] = useState('');
-    const [birthdate, setBirthdate] = useState('');
-    const [favoriteDrink, setFavoriteDrink] = useState('');
-    const [experienceLevel, setExperienceLevel] = useState('novato');
+    const verifyPermissions = async () => {
+        const { granted: cameraGranted } = await ImagePicker.requestCameraPermissionsAsync();
+        const { granted: galleryGranted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        if (!cameraGranted || !galleryGranted) {
+            Alert.alert("Permisos insuficientes", "Necesitas otorgar permisos de cámara y galería para continuar.", [{ text: "Ok" }]);
+            return false;
+        }
+        return true;
+    };
+
+    const pickImage = async () => {
+        const permissionOK = await verifyPermissions();
+        if (!permissionOK) return;
+
+        Alert.alert(
+            "Seleccionar imagen",
+            "¿Deseas tomar una foto o seleccionar de la galería?",
+            [
+                {
+                    text: "Cámara",
+                    onPress: async () => {
+                        let result = await ImagePicker.launchCameraAsync({
+                            mediaTypes: ImagePicker.MediaTypeOptions.All,
+                            allowsEditing: true,
+                            aspect: [1, 1],
+                            base64: true,
+                            quality: 1,
+                        });
+
+                        if (!result.canceled) {
+                            dispatch(setProfilePicture(`data:image/jpeg;base64,${result.assets[0].base64}`));
+                        }
+                    }
+                },
+                {
+                    text: "Galería",
+                    onPress: async () => {
+                        let result = await ImagePicker.launchImageLibraryAsync({
+                            mediaTypes: ImagePicker.MediaTypeOptions.All,
+                            allowsEditing: true,
+                            aspect: [1, 1],
+                            base64: true,
+                            quality: 1,
+                        });
+
+                        if (!result.canceled) {
+                            dispatch(setProfilePicture(`data:image/jpeg;base64,${result.assets[0].base64}`));
+                        }
+                    }
+                },
+                {
+                    text: "Cancelar",
+                    style: "cancel"
+                }
+            ]
+        );
+    };
 
     return (
 
@@ -45,13 +109,6 @@ const EditProfileScreen = () => {
                     <CameraIcon />
                 </Pressable>
             </View>
-
-        
-
-
-
-
-
 
 
             <TextInput
@@ -107,9 +164,18 @@ const EditProfileScreen = () => {
                     styles.saveButton,
                     { backgroundColor: pressed ? colores.verdeOscuro : colores.verdeEsmeralda },
                 ]}
-                onPress={saveProfile}
+                onPress={()=> {{saveProfile,navigation.navigate("Perfil")}}}
             >
                 <Text style={styles.saveButtonText}>Guardar Perfil</Text>
+            </Pressable>
+            <Pressable
+                style={({ pressed }) => [
+                    styles.saveButton,
+                    { backgroundColor: pressed ? colores.dorado : colores.doradoApagado },
+                ]}
+                onPress={()=> {{navigation.navigate("Perfil")}}}
+            >
+                <Text style={styles.saveButtonText}>Cancelar</Text>
             </Pressable>
         </ScrollView>
 
@@ -175,7 +241,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 15,
         alignItems: 'center',
-        marginVertical: 20,
+        marginVertical: 10,
     },
     saveButtonText: {
         color: colores.blancoApagado,
