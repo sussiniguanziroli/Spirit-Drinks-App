@@ -16,6 +16,8 @@ const SignUpScreen = ({ navigation }) => {
 
     const dispatch = useDispatch();
 
+
+    
     useEffect(() => {
         if (result.status==="rejected") {
         } else if (result.status === "fulfilled") {
