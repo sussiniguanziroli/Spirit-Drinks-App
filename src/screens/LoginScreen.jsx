@@ -5,6 +5,7 @@ import { useLoginMutation } from '../services/authService';
 import { setUser } from '../features/auth/authSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { insertSessions, clearSessions } from '../db';
 import  Icon  from 'react-native-vector-icons/MaterialIcons';
 
 
@@ -20,11 +21,21 @@ const LoginScreen = ({ navigation }) => {
 
 
     useEffect(()=>{
-        if(result.status==="rejected"){
-        }else if(result.status==="fulfilled"){
+        
+        if(result.isSuccess){
             dispatch(setUser(result.data))   
+            if (rememberMe) {
+                clearSessions().then(()=>console.log("sesiones eliminadas")).catch(error => console.log('no se elimino sesion'))
+                insertSessions({
+                    localId: result.data.localId,
+                    email: result.data.email,
+                    token: result.data.idToken,
+                })
+                    .then((result) =>console.log("Result exitoso",result))
+                    .catch((error) =>console.log('Error',error))
+            }
         }
-    },[result]) 
+    },[result, rememberMe]) 
 
     const onsubmit = ()=>{
         //console.log(email,password)       
