@@ -60,12 +60,6 @@ const ProfileScreen = ({ navigation }) => {
                 }
             </View>
 
-            <View style={styles.containerOption}>
-                <Pressable
-                    onPress={() => { navigation.navigate("EditarPerfil") }}
-                ><Text style={styles.whiteOption}>Editar Perfil</Text></Pressable>
-            </View>
-
         </ScrollView>
     );
 };
@@ -165,15 +159,6 @@ const styles = StyleSheet.create({
         height: 128,
         borderRadius: 128
     },
-    whiteOption: {
-        color: colores.blancoApagado,
-        fontWeight: 'bold',
-    },
-    containerOption: {
-        textAlign: 'center',
-        alignItems: 'center',
-        rowGap: 5,
-    }
 });
 
 export default ProfileScreen;
