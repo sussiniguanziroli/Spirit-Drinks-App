@@ -9,6 +9,8 @@ import AuthNavigator from "./AuthNavigator";
 
 import { useGetProfilePictureQuery } from "../services/userService";
 import { setProfilePicture } from "../features/auth/authSlice";
+import { fetchSessions } from "../db";
+import { setUser } from "../features/auth/authSlice";
 
 const Stack = createNativeStackNavigator()
 
@@ -26,6 +28,22 @@ const MainNavigator = () => {
             dispatch(setProfilePicture(profilePictures.profilePicture))
         }
     }, [profilePictures])
+
+    useEffect(()=> {
+        if(!user) {
+            (async ()=> {
+                try {
+                    const session = await fetchSessions()
+                    if (session.length) {
+                        dispatch(setUser(session[0]))
+                    }
+                    console.log('sesion', session)
+                } catch(error) {
+                    console.log('error al obtener la sesion', error)
+                }
+            })()
+        }
+    },[])
     
     
 

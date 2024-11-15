@@ -1,27 +1,52 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet, Image, ScrollView, Alert } from 'react-native';
 import { colores } from '../global/colores';
-import { useSelector} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearUser } from '../features/auth/authSlice';
+import { clearSessions } from '../db';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useWindowDimensions } from 'react-native';
 
-const ProfileScreen = ({navigation}) => {
+
+
+const ProfileScreen = ({ navigation }) => {
 
     const user = useSelector(state => state.authReducer.value.email)
     const profilePicture = useSelector(state => state.authReducer.value.profilePicture)
-    
+    const dispatch = useDispatch();
 
-    
+    const { width } = useWindowDimensions();
+    const headerWidth = width * 0.86;
 
-    
+    const handleLogOut = () => {
+        clearSessions()
+        dispatch(clearUser())
+    }
 
-    
-
-
-   
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Mi Perfil</Text>
 
+            <View style={[styles.profileHeaderContainer, { width: headerWidth }]}>
+
+                <Pressable
+                    onPress={() => { navigation.navigate("EditarPerfil") }}
+                >
+                    <Icon name='edit' color={colores.blancoApagado} size={25} />
+                </Pressable>
+
+
+                <Text style={styles.title}>Mi Perfil</Text>
+
+                <Pressable
+                    onPress={handleLogOut}
+                >
+                    <Icon name='logout' color={colores.blancoApagado} size={25} />
+                </Pressable>
+
+
+
+            </View>
 
             <View style={styles.imageProfileContainer}>
                 {
@@ -35,16 +60,22 @@ const ProfileScreen = ({navigation}) => {
                 }
             </View>
 
-            <Pressable
-                onPress={() => {navigation.navigate("EditarPerfil")}}
-            ><Text>Editar Perfil</Text></Pressable>
-
+            <View style={styles.containerOption}>
+                <Pressable
+                    onPress={() => { navigation.navigate("EditarPerfil") }}
+                ><Text style={styles.whiteOption}>Editar Perfil</Text></Pressable>
+            </View>
 
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
+    profileHeaderContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
     container: {
         flexGrow: 1,
         backgroundColor: colores.mainTheme,
@@ -133,6 +164,15 @@ const styles = StyleSheet.create({
         width: 128,
         height: 128,
         borderRadius: 128
+    },
+    whiteOption: {
+        color: colores.blancoApagado,
+        fontWeight: 'bold',
+    },
+    containerOption: {
+        textAlign: 'center',
+        alignItems: 'center',
+        rowGap: 5,
     }
 });
 

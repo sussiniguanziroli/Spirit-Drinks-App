@@ -9,7 +9,7 @@ const Search = ({ setSearch }) => {
         <TextInput
             placeholder='Buscar un producto'
             onChangeText={(text) => setSearch(text)}
-            style={[styles.searchInput, { width: searchWidth }]} // Aplica el ancho dinámico aquí
+            style={[styles.searchInput, { width: searchWidth }]} 
         />
     );
 };

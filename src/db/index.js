@@ -17,7 +17,7 @@ export const insertSessions = ({ email, localId, token }) => {
 export const fetchSessions = () => {
     const promise = new Promise((resolved, rejected) => {
         const query = 'SELECT * FROM sessions'
-        db.transaction(tx => tx.executeSql(query, [], (_, result) => resolved(result), (_, result) => rejected(result)))
+        db.transaction(tx => tx.executeSql(query, [], (_, result) => resolved(result.rows._array), (_, result) => rejected(result)))
     })
     return promise
 }
