@@ -5,19 +5,20 @@ export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: fetchBaseQuery({ baseUrl: base_url }),
     endpoints: (builder) => ({
-        putProfilePicture: builder.mutation({
-            query: ({ profilePicture, localId }) => ({
-                url: `profilePictures/${localId}.json`,
+        putProfileData: builder.mutation({
+            query: ({ profilePicture, data, localId }) => ({
+                url: `profilesData/${localId}.json`,
                 method: "PUT",
                 body: {
+                    data: data,
                     profilePicture: profilePicture
                 }
             }),
         }),
         getProfilePicture: builder.query({
-            query: (localId) => `profilePictures/${localId}.json`
-        })
+            query: (localId) => `profilesData/${localId}.json`
+        }),
     }),
 });
 
-export const { usePutProfilePictureMutation, useGetProfilePictureQuery } = userApi;
+export const { usePutProfileDataMutation, useGetProfilePictureQuery } = userApi;

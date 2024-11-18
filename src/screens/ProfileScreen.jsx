@@ -6,6 +6,7 @@ import { clearUser } from '../features/auth/authSlice';
 import { clearSessions } from '../db';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useWindowDimensions } from 'react-native';
+import { clearProfileData } from '../features/user/userSlice';
 
 
 
@@ -14,13 +15,15 @@ const ProfileScreen = ({ navigation }) => {
     const user = useSelector(state => state.authReducer.value.email)
     const profilePicture = useSelector(state => state.authReducer.value.profilePicture)
     const dispatch = useDispatch();
+    const profileData = useSelector(state => state.userReducer)
 
     const { width } = useWindowDimensions();
     const headerWidth = width * 0.86;
 
     const handleLogOut = () => {
-        clearSessions()
-        dispatch(clearUser())
+        clearSessions();
+        dispatch(clearUser());
+        dispatch(clearProfileData());
     }
 
 
@@ -59,6 +62,11 @@ const ProfileScreen = ({ navigation }) => {
 
                 }
             </View>
+
+            <Text style={styles.profileData}>Nombre: {profileData.name || "Sin especificar"}</Text>
+            <Text style={styles.profileData}>Ubicación: {profileData.location || "Sin especificar"}</Text>
+            <Text style={styles.profileData}>Fecha de nacimiento: {profileData.birthdate || "Sin especificar"}</Text>
+            <Text style={styles.profileData}>Bebida favorita: {profileData.favoriteDrink || "Sin especificar"}</Text>
 
         </ScrollView>
     );

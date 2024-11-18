@@ -3,11 +3,12 @@ import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import { colores } from '../global/colores';
 import { useSignUpMutation } from '../services/authService';
 import { setUser } from '../features/auth/authSlice';
-import { UseDispatch, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const SignUpScreen = ({ navigation }) => {
 
-    const [username, setUsername] = useState('');
+    const [nombre, setNombre] = useState('');
+    const [apellido, setApellido] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -17,16 +18,16 @@ const SignUpScreen = ({ navigation }) => {
     const dispatch = useDispatch();
 
 
-    
+
     useEffect(() => {
-        if (result.status==="rejected") {
+        if (result.status === "rejected") {
         } else if (result.status === "fulfilled") {
             dispatch(setUser(result.data))
         }
-    },[result])
+    }, [result])
 
     const onSubmit = () => {
-        console.log(username ,email, password, confirmPassword)
+        console.log(nombre, apellido, email, password, confirmPassword)
         triggerSignUp({
             email,
             password
@@ -39,9 +40,16 @@ const SignUpScreen = ({ navigation }) => {
             <Text style={styles.subtitle}>Registro</Text>
 
             <TextInput
-                onChangeText={(text) => setUsername(text)}
+                onChangeText={(text) => setNombre(text)}
                 style={styles.input}
                 placeholder="Nombre"
+                placeholderTextColor={colores.grisClaro}
+            />
+
+            <TextInput
+                onChangeText={(text) => setApellido(text)}
+                style={styles.input}
+                placeholder="Apellido"
                 placeholderTextColor={colores.grisClaro}
             />
 
@@ -73,7 +81,7 @@ const SignUpScreen = ({ navigation }) => {
                     { backgroundColor: pressed ? colores.verdeOscuro : colores.verdeEsmeralda },
                 ]}
                 onPress={() => {
-                   onSubmit()
+                    onSubmit()
                 }}
             >
                 <Text style={styles.buttonText}>Registrarse</Text>

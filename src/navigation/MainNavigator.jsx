@@ -11,6 +11,7 @@ import { useGetProfilePictureQuery } from "../services/userService";
 import { setProfilePicture } from "../features/auth/authSlice";
 import { fetchSessions } from "../db";
 import { setUser } from "../features/auth/authSlice";
+import { setProfileData } from "../features/user/userSlice";
 
 const Stack = createNativeStackNavigator()
 
@@ -21,13 +22,14 @@ const MainNavigator = () => {
 
     const dispatch = useDispatch();
 
-    const {data: profilePictures, isLoading, error} = useGetProfilePictureQuery(localId);
+    const {data: profileData, isLoading, error} = useGetProfilePictureQuery(localId);
 
     useEffect(() => {
-        if (profilePictures) {
-            dispatch(setProfilePicture(profilePictures.profilePicture))
+        if (profileData) {
+            dispatch(setProfilePicture(profileData.profilePicture))
+            dispatch(setProfileData(profileData.data))
         }
-    }, [profilePictures])
+    }, [profileData])
 
     useEffect(()=> {
         if(!user) {

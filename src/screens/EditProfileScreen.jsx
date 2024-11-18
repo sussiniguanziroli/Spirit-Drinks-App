@@ -4,11 +4,11 @@ import { colores } from '../global/colores'
 import { Picker } from '@react-native-picker/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import CameraIcon from '../components/CameraIcon';
-import { usePutProfilePictureMutation } from '../services/userService';
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
-import { setProfilePicture } from '../features/auth/authSlice'
-
+import { setProfileData } from '../features/user/userSlice';
+import { setProfilePicture } from '../features/auth/authSlice';
+import { usePutProfileDataMutation } from '../services/userService';
 
 
 const EditProfileScreen = ({navigation}) => {
@@ -16,19 +16,30 @@ const EditProfileScreen = ({navigation}) => {
     const user = useSelector(state => state.authReducer.value.email)
     const profilePicture = useSelector(state => state.authReducer.value.profilePicture)
     const localId = useSelector(state=>state.authReducer.value.localId)
-
+    const profileData = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
-    const [name, setName] = useState('');
-    const [location, setLocation] = useState('');
-    const [birthdate, setBirthdate] = useState('');
-    const [favoriteDrink, setFavoriteDrink] = useState('');
-    const [experienceLevel, setExperienceLevel] = useState('novato');
 
-    const [triggerPutProfilePicture, result] = usePutProfilePictureMutation();
+
+    const [triggerPutProfileDataMutation, dataResult] = usePutProfileDataMutation();
+    
+    const [data, setData] = useState({
+        name: profileData.name,
+        location: profileData.location,
+        birthdate: profileData.birthdate,
+        favoriteDrink: profileData.favoriteDrink,
+        experienceLevel: profileData.experienceLevel,
+    });
+
+    const handleChange = (key, value) => {
+        setData((prev) => ({ ...prev, [key]: value }));
+    };
 
     const saveProfile = () => {
-        triggerPutProfilePicture({profilePicture, localId})
+        dispatch(setProfileData(data));
+        triggerPutProfileDataMutation({profilePicture, data, localId})
     };
+
+    
 
 
     const verifyPermissions = async () => {
@@ -114,48 +125,34 @@ const EditProfileScreen = ({navigation}) => {
             <TextInput
                 style={styles.input}
                 placeholder="Nombre"
-                placeholderTextColor={colores.grisClaro}
-                value={name}
-                onChangeText={setName}
+                value={data.name}
+                onChangeText={(value) => handleChange("name", value)}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Ubicación"
-                placeholderTextColor={colores.grisClaro}
-                value={location}
-                onChangeText={setLocation}
+                value={data.location}
+                onChangeText={(value) => handleChange("location", value)}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Fecha de nacimiento (DD/MM/AAAA)"
-                placeholderTextColor={colores.grisClaro}
-                value={birthdate}
-                onChangeText={setBirthdate}
+                placeholder="Fecha de nacimiento"
+                value={data.birthdate}
+                onChangeText={(value) => handleChange("birthdate", value)}
             />
-
-            <Text style={styles.label}>Preferencia de bebida:</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Bebida favorita"
+                value={data.favoriteDrink}
+                onChangeText={(value) => handleChange("favoriteDrink", value)}
+            />
             <Picker
-                selectedValue={favoriteDrink}
-                onValueChange={(itemValue) => setFavoriteDrink(itemValue)}
+                selectedValue={data.experienceLevel}
                 style={styles.picker}
-            >
-                <Picker.Item label="Selecciona una opción" value="" />
-                <Picker.Item label="Cerveza" value="cerveza" />
-                <Picker.Item label="Vino" value="vino" />
-                <Picker.Item label="Whisky" value="whisky" />
-                <Picker.Item label="Tequila" value="tequila" />
-                <Picker.Item label="Vodka" value="vodka" />
-                <Picker.Item label="Ron" value="ron" />
-            </Picker>
-
-            <Text style={styles.label}>Nivel de experiencia:</Text>
-            <Picker
-                selectedValue={experienceLevel}
-                onValueChange={(itemValue) => setExperienceLevel(itemValue)}
-                style={styles.picker}
+                onValueChange={(value) => handleChange("experienceLevel", value)}
             >
                 <Picker.Item label="Novato" value="novato" />
-                <Picker.Item label="Entusiasta" value="entusiasta" />
+                <Picker.Item label="Intermedio" value="intermedio" />
                 <Picker.Item label="Experto" value="experto" />
             </Picker>
 
@@ -164,7 +161,7 @@ const EditProfileScreen = ({navigation}) => {
                     styles.saveButton,
                     { backgroundColor: pressed ? colores.verdeOscuro : colores.verdeEsmeralda },
                 ]}
-                onPress={()=> {{saveProfile,navigation.navigate("Perfil")}}}
+                onPress={()=> {{saveProfile(),navigation.navigate("Perfil")}}}
             >
                 <Text style={styles.saveButtonText}>Guardar Perfil</Text>
             </Pressable>
