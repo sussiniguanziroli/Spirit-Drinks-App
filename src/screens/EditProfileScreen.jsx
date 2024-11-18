@@ -24,6 +24,7 @@ const EditProfileScreen = ({navigation}) => {
     
     const [data, setData] = useState({
         name: profileData.name,
+        surname: profileData.surname,
         location: profileData.location,
         birthdate: profileData.birthdate,
         favoriteDrink: profileData.favoriteDrink,
@@ -130,6 +131,12 @@ const EditProfileScreen = ({navigation}) => {
             />
             <TextInput
                 style={styles.input}
+                placeholder="Apellido"
+                value={data.surname}
+                onChangeText={(value) => handleChange("surname", value)}
+            />
+            <TextInput
+                style={styles.input}
                 placeholder="Ubicación"
                 value={data.location}
                 onChangeText={(value) => handleChange("location", value)}
@@ -151,9 +158,9 @@ const EditProfileScreen = ({navigation}) => {
                 style={styles.picker}
                 onValueChange={(value) => handleChange("experienceLevel", value)}
             >
-                <Picker.Item label="Novato" value="novato" />
-                <Picker.Item label="Intermedio" value="intermedio" />
-                <Picker.Item label="Experto" value="experto" />
+                <Picker.Item label="Novato" value="Novato" />
+                <Picker.Item label="Intermedio" value="Intermedio" />
+                <Picker.Item label="Experto" value="Experto" />
             </Picker>
 
             <Pressable

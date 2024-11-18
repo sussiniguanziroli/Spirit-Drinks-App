@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet, Image, ScrollView, Alert } from 'react-native';
 import { colores } from '../global/colores';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,6 +25,23 @@ const ProfileScreen = ({ navigation }) => {
         dispatch(clearUser());
         dispatch(clearProfileData());
     }
+
+    useEffect(() => {
+        // Comprueba si solo hay nombre y apellido definidos
+        const { name, surname, ...rest } = profileData;
+        const hasAdditionalInfo = Object.values(rest).some(value => value);
+
+        if (!hasAdditionalInfo) {
+            Alert.alert(
+                "Completa tu perfil",
+                "Por favor, agrega más información en tu perfil para mejorar tu experiencia.",
+                [
+                    { text: "Completar Informacion", onPress: () => navigation.navigate('EditarPerfil') },
+                    { text: "Cerrar", style: "cancel" },
+                ]
+            );
+        }
+    }, [profileData, navigation]);
 
 
     return (
@@ -63,10 +80,12 @@ const ProfileScreen = ({ navigation }) => {
                 }
             </View>
 
-            <Text style={styles.profileData}>Nombre: {profileData.name || "Sin especificar"}</Text>
-            <Text style={styles.profileData}>Ubicación: {profileData.location || "Sin especificar"}</Text>
-            <Text style={styles.profileData}>Fecha de nacimiento: {profileData.birthdate || "Sin especificar"}</Text>
-            <Text style={styles.profileData}>Bebida favorita: {profileData.favoriteDrink || "Sin especificar"}</Text>
+            <Text style={styles.label}>Nombre: {profileData.name || "Sin especificar"}</Text>
+            <Text style={styles.label}>Apellido: {profileData.surname || "Sin especificar"}</Text>
+            <Text style={styles.label}>Ubicación: {profileData.location || "Sin especificar"}</Text>
+            <Text style={styles.label}>Fecha de nacimiento: {profileData.birthdate || "Sin especificar"}</Text>
+            <Text style={styles.label}>Bebida favorita: {profileData.favoriteDrink || "Sin especificar"}</Text>
+            <Text style={styles.label}>Experiencia: {profileData.experienceLevel || "Sin especificar"}</Text>
 
         </ScrollView>
     );

@@ -2,11 +2,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import ShopNavigator from "./ShopNavigator";
 import CartNavigator from "./CartNavigator";
 import ReceiptsNavigator from "./ReceiptsNavigator";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import { colores } from "../global/colores";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ProfileNavigator from "./ProfileNavigator";
 import LocationsNavigator from "./LocationsNavigator";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
@@ -50,11 +51,34 @@ const TabNavigator = () => {
             />
             <Tab.Screen
                 name="Profile"
-                component={ProfileNavigator} store
+                component={ProfileNavigator}
                 options={{
-                    tabBarIcon: ({ focused }) => (<Icon name="account-circle" size={25} color={focused ? colores.doradoApagado : colores.blancoApagado} />)
+                    tabBarIcon: ({ focused }) => {
+                        // Obtener imagen de perfil del usuario desde Redux o un estado global
+                        const profilePicture = useSelector(state => state.authReducer.value.profilePicture);
+
+                        return profilePicture ? (
+                            <Image
+                                source={{ uri: profilePicture }}
+                                style={{
+                                    width: 30,
+                                    height: 30,
+                                    borderRadius: 15,
+                                    borderWidth: focused ? 2 : 0,
+                                    borderColor: colores.doradoApagado,
+                                }}
+                            />
+                        ) : (
+                            <Icon
+                                name="account-circle"
+                                size={25}
+                                color={focused ? colores.doradoApagado : colores.blancoApagado}
+                            />
+                        );
+                    },
                 }}
             />
+
         </Tab.Navigator>
     )
 }

@@ -4,18 +4,33 @@ import { colores } from '../global/colores';
 import { useSignUpMutation } from '../services/authService';
 import { setUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
+import { setProfileData } from '../features/user/userSlice';
+import { useSelector } from 'react-redux';
+import { usePutProfileDataMutation } from '../services/userService';
 
 const SignUpScreen = ({ navigation }) => {
 
-    const [nombre, setNombre] = useState('');
-    const [apellido, setApellido] = useState('');
+    const profileData = useSelector(state => state.userReducer)
+    const localId = useSelector(state => state.authReducer.value.localId)
+
+    const [data, setData] = useState({
+        name: profileData.name,
+        surname: profileData.surname,
+    });
+
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const [triggerPutProfileDataMutation, resultBis] = usePutProfileDataMutation();
     const [triggerSignUp, result] = useSignUpMutation();
 
     const dispatch = useDispatch();
+
+    const handleChange = (key, value) => {
+        setData((prev) => ({ ...prev, [key]: value }));
+    };
 
 
 
@@ -26,31 +41,59 @@ const SignUpScreen = ({ navigation }) => {
         }
     }, [result])
 
-    const onSubmit = () => {
-        console.log(nombre, apellido, email, password, confirmPassword)
-        triggerSignUp({
-            email,
-            password
-        })
-    }
+    const onSubmit = async () => {
+        try {
+            // Primero, intenta registrar al usuario
+            const signUpResponse = await triggerSignUp({
+                email,
+                password,
+            }).unwrap(); // unwrap para manejar errores directamente
+    
+            // Si se crea el usuario, obtén el localId
+            const { localId } = signUpResponse;
+    
+            // Actualiza el estado global con la información del usuario
+            dispatch(setUser(signUpResponse));
+    
+            // Prepara los datos del perfil
+            const profilePayload = {
+                name: data.name.trim(),
+                surname: data.surname.trim(),
+            };
+    
+            // Guarda los datos del perfil en Firebase
+            await triggerPutProfileDataMutation({ data: profilePayload, localId }).unwrap();
+    
+            // Actualiza el estado global con los datos del perfil
+            dispatch(setProfileData(profilePayload));
+    
+        } catch (error) {
+            // Manejo de errores
+            console.error("Error durante el registro:", error);
+            Alert.alert("Error", "Hubo un problema al registrarse. Inténtalo de nuevo.");
+        }
+    };
+    
 
     return (
         <View style={styles.container}>
             <Text style={styles.logo}>Spirit Drinks</Text>
             <Text style={styles.subtitle}>Registro</Text>
 
-            <TextInput
-                onChangeText={(text) => setNombre(text)}
-                style={styles.input}
-                placeholder="Nombre"
-                placeholderTextColor={colores.grisClaro}
-            />
 
             <TextInput
-                onChangeText={(text) => setApellido(text)}
+                placeholderTextColor={colores.grisClaro}
+                style={styles.input}
+                placeholder="Nombre"
+                value={data.name}
+                onChangeText={(value) => handleChange("name", value)}
+            />
+            <TextInput
+                placeholderTextColor={colores.grisClaro}
                 style={styles.input}
                 placeholder="Apellido"
-                placeholderTextColor={colores.grisClaro}
+                value={data.surname}
+                onChangeText={(value) => handleChange("surname", value)}
             />
 
             <TextInput
