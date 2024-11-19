@@ -10,4 +10,5 @@ export const colores = {
     borgona: "#800000",
     azulMarino: "#001f3f",
     azulOscuro: "#00008b",
+    rojoError: '#ff0000',
 }

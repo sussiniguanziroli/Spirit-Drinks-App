@@ -7,6 +7,9 @@ import { useDispatch } from 'react-redux';
 import { setProfileData } from '../features/user/userSlice';
 import { useSelector } from 'react-redux';
 import { usePutProfileDataMutation } from '../services/userService';
+import { validationSchema } from '../validations/validationSchema';
+import { Alert } from 'react-native';
+
 
 const SignUpScreen = ({ navigation }) => {
 
@@ -22,6 +25,15 @@ const SignUpScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const [errorName, setErrorName] = useState("");
+    const [errorSurname, setErrorSurname] = useState("");
+    const [errorEmail, setErrorEmail] = useState("");
+    const [errorPassword, setErrorPassword] = useState("");
+    const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
+
+    const [genericValidationError, setGenericValidationError] = useState("");
+
 
     const [triggerPutProfileDataMutation, resultBis] = usePutProfileDataMutation();
     const [triggerSignUp, result] = useSignUpMutation();
@@ -43,37 +55,62 @@ const SignUpScreen = ({ navigation }) => {
 
     const onSubmit = async () => {
         try {
+            validationSchema.validateSync({data, email, password, confirmPassword })
+            setErrorConfirmPassword("")
+            setErrorEmail("")
+            setErrorPassword("")
+            setErrorName("")
+            setErrorSurname("")
             // Primero, intenta registrar al usuario
             const signUpResponse = await triggerSignUp({
                 email,
                 password,
             }).unwrap(); // unwrap para manejar errores directamente
-    
+
             // Si se crea el usuario, obtén el localId
             const { localId } = signUpResponse;
-    
+
             // Actualiza el estado global con la información del usuario
             dispatch(setUser(signUpResponse));
-    
+
             // Prepara los datos del perfil
             const profilePayload = {
                 name: data.name.trim(),
                 surname: data.surname.trim(),
             };
-    
+
             // Guarda los datos del perfil en Firebase
             await triggerPutProfileDataMutation({ data: profilePayload, localId }).unwrap();
-    
+
             // Actualiza el estado global con los datos del perfil
             dispatch(setProfileData(profilePayload));
-    
+
         } catch (error) {
             // Manejo de errores
             console.error("Error durante el registro:", error);
             Alert.alert("Error", "Hubo un problema al registrarse. Inténtalo de nuevo.");
+            switch (error.path) {
+                case "email":
+                    setErrorEmail(error.message)
+                    break
+                case "password":
+                    setErrorPassword(error.message)
+                    break
+                case "confirmPassword":
+                    setErrorConfirmPassword(error.message)
+                    break
+                case "data":
+                    setErrorName(error.message)
+                case "data":
+                    setErrorSurname(error.message)
+                    break
+                default:
+                    setGenericValidationError(error.message)
+                    break
+            }
         }
     };
-    
+
 
     return (
         <View style={styles.container}>
@@ -88,6 +125,7 @@ const SignUpScreen = ({ navigation }) => {
                 value={data.name}
                 onChangeText={(value) => handleChange("name", value)}
             />
+            <Text style={styles.whiteLabel}>{errorName}</Text>
             <TextInput
                 placeholderTextColor={colores.grisClaro}
                 style={styles.input}
@@ -95,13 +133,13 @@ const SignUpScreen = ({ navigation }) => {
                 value={data.surname}
                 onChangeText={(value) => handleChange("surname", value)}
             />
-
+            <Text style={styles.whiteLabel}>{errorSurname}</Text>
             <TextInput
                 onChangeText={(text) => setEmail(text)}
                 style={styles.input} placeholder="Email"
                 placeholderTextColor={colores.grisClaro}
             />
-
+            <Text style={styles.whiteLabel}>{errorEmail}</Text>
             <TextInput
                 onChangeText={(text) => setPassword(text)}
                 style={styles.input}
@@ -109,7 +147,7 @@ const SignUpScreen = ({ navigation }) => {
                 placeholderTextColor={colores.grisClaro}
                 secureTextEntry
             />
-
+            <Text style={styles.whiteLabel}>{errorPassword}</Text>
             <TextInput
                 onChangeText={(text) => setConfirmPassword(text)}
                 style={styles.input}
@@ -117,7 +155,7 @@ const SignUpScreen = ({ navigation }) => {
                 placeholderTextColor={colores.grisClaro}
                 secureTextEntry
             />
-
+            <Text style={styles.whiteLabel}>{errorConfirmPassword}</Text>
             <Pressable
                 style={({ pressed }) => [
                     styles.button,
@@ -182,6 +220,11 @@ const styles = StyleSheet.create({
         color: colores.verdeEsmeralda,
         fontWeight: 'bold',
     },
+    whiteLabel: {
+        color: colores.rojoError,
+        alignSelf: "flex-start",
+        margin: 0,
+    }
 });
 
 export default SignUpScreen;
