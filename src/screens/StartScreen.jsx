@@ -4,7 +4,7 @@ import { colores } from '../global/colores';
 
 const StartScreen = ({ navigation }) => {
     const handleCategoriesPress = () => {
-        navigation.navigate('Categories'); // Cambia 'Categories' al nombre real de tu screen de categorías
+        navigation.navigate("TabNavigator", { screen: "Categories" });
     };
 
     const handleTourPress = () => {

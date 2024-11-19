@@ -92,23 +92,23 @@ const ProfileScreen = ({ navigation }) => {
                 <Text style={styles.infoTitle}>Mi Información</Text>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Ubicación</Text>
-                    <Text style={styles.infoValue}>{profileData.location || "Sin especificar"}</Text>
+                    <Text style={styles.infoValue}>{profileData.location || "Completar"}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Fecha de nacimiento</Text>
-                    <Text style={styles.infoValue}>{profileData.birthdate || "Sin especificar"}</Text>
+                    <Text style={styles.infoValue}>{profileData.birthdate || "Completar"}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Sexo</Text>
-                    <Text style={styles.infoValue}>{profileData.sexo || "Sin especificar"}</Text>
+                    <Text style={styles.infoValue}>{profileData.sexo || "Completar"}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Bedida favorita</Text>
-                    <Text style={styles.infoValue}>{profileData.favoriteDrink || "Sin especificar"}</Text>
+                    <Text style={styles.infoValue}>{profileData.favoriteDrink || "Completar"}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Nivel de experiencia</Text>
-                    <Text style={styles.infoValue}>{profileData.experienceLevel || "Sin especificar"}</Text>
+                    <Text style={styles.infoValue}>{profileData.experienceLevel || "Completar"}</Text>
                 </View>
             </View>
 

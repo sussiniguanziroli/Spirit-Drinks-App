@@ -14,7 +14,6 @@ const ShopNavigator = () => {
       screenOptions={{
         header: ({ route }) => <Header subtitle={route.name} />
       }}>
-        <Stack.Screen name="Bienvenido" component={StartScreen} />
       <Stack.Screen name="Categories" component={CategoriesScreen} />
       <Stack.Screen name="Products" component={ProductsScreen} />
       <Stack.Screen name="Product" component={ProductScreen} />
