@@ -80,12 +80,37 @@ const ProfileScreen = ({ navigation }) => {
                 }
             </View>
 
-            <Text style={styles.label}>Nombre: {profileData.name || "Sin especificar"}</Text>
-            <Text style={styles.label}>Apellido: {profileData.surname || "Sin especificar"}</Text>
-            <Text style={styles.label}>Ubicación: {profileData.location || "Sin especificar"}</Text>
-            <Text style={styles.label}>Fecha de nacimiento: {profileData.birthdate || "Sin especificar"}</Text>
-            <Text style={styles.label}>Bebida favorita: {profileData.favoriteDrink || "Sin especificar"}</Text>
-            <Text style={styles.label}>Experiencia: {profileData.experienceLevel || "Sin especificar"}</Text>
+            <View style={styles.profileHeaderContainer}>
+
+                <Text style={styles.mainLabel}>{profileData.name || "Sin especificar"}</Text>
+                <Text style={styles.mainLabel}>{profileData.surname || "Sin especificar"}</Text>
+
+            </View>
+
+
+            <View style={styles.infoContainer}>
+                <Text style={styles.infoTitle}>Mi Información</Text>
+                <View style={styles.infoRow}>
+                    <Text style={styles.infoLabel}>Ubicación</Text>
+                    <Text style={styles.infoValue}>{profileData.location || "Sin especificar"}</Text>
+                </View>
+                <View style={styles.infoRow}>
+                    <Text style={styles.infoLabel}>Fecha de nacimiento</Text>
+                    <Text style={styles.infoValue}>{profileData.birthdate || "Sin especificar"}</Text>
+                </View>
+                <View style={styles.infoRow}>
+                    <Text style={styles.infoLabel}>Sexo</Text>
+                    <Text style={styles.infoValue}>{profileData.sexo || "Sin especificar"}</Text>
+                </View>
+                <View style={styles.infoRow}>
+                    <Text style={styles.infoLabel}>Bedida favorita</Text>
+                    <Text style={styles.infoValue}>{profileData.favoriteDrink || "Sin especificar"}</Text>
+                </View>
+                <View style={styles.infoRow}>
+                    <Text style={styles.infoLabel}>Nivel de experiencia</Text>
+                    <Text style={styles.infoValue}>{profileData.experienceLevel || "Sin especificar"}</Text>
+                </View>
+            </View>
 
         </ScrollView>
     );
@@ -142,6 +167,13 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginVertical: 5,
     },
+    mainLabel: {
+        color: colores.dorado,
+        fontSize: 22,
+        fontWeight: 'bold',
+        alignSelf: 'flex-start',
+        margin: 3,
+    },
     picker: {
         width: '100%',
         backgroundColor: colores.blancoApagado,
@@ -185,6 +217,36 @@ const styles = StyleSheet.create({
         width: 128,
         height: 128,
         borderRadius: 128
+    },
+    infoContainer: {
+        padding: 20,
+        backgroundColor: '#F5F5F5',
+        borderRadius: 10,
+        margin: 20,
+    },
+    infoTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    infoRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+    },
+    infoLabel: {
+        fontSize: 16,
+        color: '#888',
+    },
+    infoValue: {
+        fontSize: 16,
+    },
+    ratingContainer: {
+        flexDirection: 'row',
+    },
+    star: {
+        fontSize: 16,
+        color: '#FFD700',
     },
 });
 
