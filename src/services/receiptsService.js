@@ -18,8 +18,14 @@ export const receiptsApi = createApi({
                 method: 'POST',
                 body: receipt
             })
-        })
+        }),
+        getReceipts: builder.query({
+            query: (localId) => ({
+                url: `profilesData/${localId}/orders.json`,
+                method: 'GET',
+            }),
+        }),
     }),
 });
 
-export const { usePostReceiptMutation, usePostReceiptOutMutation } = receiptsApi;
+export const { usePostReceiptMutation, usePostReceiptOutMutation, useGetReceiptsQuery } = receiptsApi;
