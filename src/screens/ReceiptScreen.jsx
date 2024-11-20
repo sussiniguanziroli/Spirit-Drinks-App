@@ -16,6 +16,7 @@ import ItemCard from '../components/ItemCard';
 import { colores } from '../global/colores';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import { Pressable } from 'react-native';
 
 const ReceiptScreen = () => {
     const localId = useSelector((state) => state.authReducer.value.localId);
@@ -23,7 +24,7 @@ const ReceiptScreen = () => {
 
     useEffect(() => {
         refetch();
-    }, []);
+    }, [receiptArray]);
 
 
     const [selectedReceipt, setSelectedReceipt] = useState(null);
@@ -91,6 +92,12 @@ const ReceiptScreen = () => {
 
         return (
             <View style={styles.emptyContainer}>
+                <Pressable
+                    style={styles.refreshBtn}
+                    onPress={refetch}
+                >
+                    <Icon name="refresh" size={40} color={colores.mainTheme} />
+                </Pressable>
                 <Text style={styles.emptyMessage}>
                     No haz realizado ninguna compra. Dirígete a la sección tienda para empezar!
                 </Text>
@@ -147,6 +154,10 @@ const ReceiptScreen = () => {
 export default ReceiptScreen;
 
 const styles = StyleSheet.create({
+    refreshBtn: {
+        alignSelf: 'center',
+        justifySelf: 'center'
+    },
     receiptContainer: {
         padding: 20,
         justifyContent: 'flex-start',
@@ -186,7 +197,7 @@ const styles = StyleSheet.create({
     },
     emptyContainer: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
         paddingHorizontal: 20,
     },
