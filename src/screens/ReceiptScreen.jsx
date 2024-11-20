@@ -1,17 +1,35 @@
-import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, View, ActivityIndicator, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+    FlatList,
+    StyleSheet,
+    Text,
+    View,
+    ActivityIndicator,
+    Modal,
+    TouchableOpacity,
+    ScrollView,
+    Button,
+} from 'react-native';
 import { useSelector } from 'react-redux';
 import { useGetReceiptsQuery } from '../services/receiptsService';
 import ItemCard from '../components/ItemCard';
 import { colores } from '../global/colores';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const ReceiptScreen = () => {
-    const localId = useSelector(state => state.authReducer.value.localId)
-    const { data, error, isLoading } = useGetReceiptsQuery(localId);
+    const localId = useSelector((state) => state.authReducer.value.localId);
+    const { data, error, isLoading, refetch } = useGetReceiptsQuery(localId);
+
+    useEffect(() => {
+        refetch();
+    }, []);
+
 
     const [selectedReceipt, setSelectedReceipt] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+
+    const navigation = useNavigation();
 
     const handleOpenModal = (receipt) => {
         setSelectedReceipt(receipt);
@@ -22,8 +40,6 @@ const ReceiptScreen = () => {
         setSelectedReceipt(null);
         setModalVisible(false);
     };
-
-
 
     const renderReceiptItem = ({ item }) => {
         const preTotal = item.cart.reduce((acumulador, cartItem) => acumulador + cartItem.cantidad * cartItem.price, 0);
@@ -70,6 +86,23 @@ const ReceiptScreen = () => {
     const receiptArray = data
         ? Object.entries(data).map(([id, receipt]) => ({ id, ...receipt }))
         : [];
+
+    if (receiptArray.length === 0) {
+
+        return (
+            <View style={styles.emptyContainer}>
+                <Text style={styles.emptyMessage}>
+                    No haz realizado ninguna compra. Dirígete a la sección tienda para empezar!
+                </Text>
+                <TouchableOpacity
+                    style={styles.shopButton}
+                    onPress={() => navigation.navigate('Shop', { screen: 'CategoriesScreen' })}
+                >
+                    <Text style={styles.shopButtonText}>Visitar Productos</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -151,43 +184,27 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 16,
     },
-
-    receiptContainer: {
-        padding: 20,
-        justifyContent: 'flex-start',
-        margin: 16,
-        gap: 10,
-        borderRadius: 10,
-        backgroundColor: '#fff',
-        elevation: 3,
-    },
-    title: {
-        fontWeight: '700',
-    },
-    date: {
-        fontSize: 14,
-        color: '#666',
-    },
-    total: {
-        fontSize: 16,
-        fontWeight: '700',
-    },
-    viewIcon: {
-        alignSelf: 'flex-end',
-    },
-    loadingContainer: {
+    emptyContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: 20,
     },
-    errorContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    errorText: {
-        color: 'red',
+    emptyMessage: {
         fontSize: 16,
+        textAlign: 'center',
+        marginBottom: 20,
+        color: '#333',
+    },
+    shopButton: {
+        backgroundColor: colores.mainTheme,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+    },
+    shopButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
     },
     modalContainer: {
         flex: 1,
@@ -245,5 +262,4 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
     },
-
 });
