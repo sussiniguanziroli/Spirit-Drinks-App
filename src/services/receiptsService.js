@@ -3,16 +3,23 @@ import {base_url} from '../firebase/config'
 
 export const receiptsApi = createApi({
     reducerPath: "receiptsApi",
-    baseQuery: fetchBaseQuery({baseUrl: base_url}),
+    baseQuery: fetchBaseQuery({ baseUrl: base_url }),
     endpoints: (builder) => ({
         postReceipt: builder.mutation({
-            query: ({...receipt}) => ({
-                url: 'receipts.json',
+            query: ({ localId, receipt }) => ({
+                url: `profilesData/${localId}/orders.json`,
                 method: 'POST',
-                data: {receipt}
+                body: receipt,
+            }),
+        }),
+        postReceiptOut: builder.mutation({
+            query: ({localId, receipt}) => ({
+                url: `receipts/${localId}.json`,
+                method: 'POST',
+                body: receipt
             })
         })
-    })
-})
+    }),
+});
 
-export const { usePostReceiptMutation } = receiptsApi
+export const { usePostReceiptMutation, usePostReceiptOutMutation } = receiptsApi;

@@ -100,9 +100,9 @@ const SignUpScreen = ({ navigation }) => {
                     setErrorConfirmPassword(error.message)
                     break
                 case "data":
-                    setErrorName(error.message)
+                    setErrorName("El nombre debe ser valido")
                 case "data":
-                    setErrorSurname(error.message)
+                    setErrorSurname("El nombre debe ser valido")
                     break
                 default:
                     setGenericValidationError(error.message)

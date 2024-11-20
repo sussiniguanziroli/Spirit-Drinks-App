@@ -3,16 +3,16 @@ import React from 'react'
 import { colores } from '../global/colores';
 import ItemCard from '../components/ItemCard';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { clearCart, removeItem } from '../features/cart/cartSlice';
+import { removeItem } from '../features/cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { usePostReceiptMutation } from '../services/receiptsService';
+
 
 const CartScreen = ({ navigation }) => {
 
     const cartLength = useSelector(state => state.cartReducer.value.cartLength);
     const total = useSelector(state => state.cartReducer.value.total);
     const cart = useSelector(state => state.cartReducer.value.cartItems);
-    const [triggerPost, result] = usePostReceiptMutation();
+    
 
     const dispatch = useDispatch();
 
@@ -22,12 +22,8 @@ const CartScreen = ({ navigation }) => {
             <View style={styles.footerContainer}>
                 <Text style={styles.footerTotal}>Total: $  {total}</Text>
                 <Pressable style={styles.confirmButton}
-                    onPress={() => {
-                        triggerPost({ cart, total, createdAt: Date.now() })
-                        dispatch(clearCart())
-                        navigation.navigate("Receipts")
-                    }}>
-                    <Text style={styles.confirmButtonText}>Confirmar</Text>
+                    onPress={() => navigation.navigate("CartConfirmation")}>
+                    <Text style={styles.confirmButtonText}>Continuar Compra</Text>
                 </Pressable>
             </View>
         )
@@ -48,7 +44,7 @@ const CartScreen = ({ navigation }) => {
                 <Text stlyle={styles.quantity}>Cantidad: {item.cantidad}</Text>
                 <Text style={styles.total}>Subtotal: $ {item.cantidad * item.price}</Text>
                 <Pressable
-                    onPress={()=> {dispatch(removeItem())}}
+                    onPress={() => { dispatch(removeItem()) }}
                 >
                     <Icon name="delete" size={24} color="#FC7A5E" style={styles.trashIcon} />
                 </Pressable>
