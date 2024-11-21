@@ -18,7 +18,17 @@ export const userApi = createApi({
         getProfilePicture: builder.query({
             query: (localId) => `profilesData/${localId}.json`
         }),
+        addDireccion: builder.mutation({
+            query: ({ localId, direccion }) => ({
+                url: `profilesData/${localId}/misDirecciones.json`,
+                method: "POST",
+                body: direccion,
+            }),
+        }),
+        getDireccions: builder.query({
+            query: (localId) => `profilesData/${localId}/misDirecciones.json`,
+        }),    
     }),
 });
 
-export const { usePutProfileDataMutation, useGetProfilePictureQuery } = userApi;
+export const { usePutProfileDataMutation, useGetProfilePictureQuery, useGetDireccionsQuery, useAddDireccionMutation } = userApi;

@@ -44,7 +44,7 @@ const CartScreen = ({ navigation }) => {
                 <Text stlyle={styles.quantity}>Cantidad: {item.cantidad}</Text>
                 <Text style={styles.total}>Subtotal: $ {item.cantidad * item.price}</Text>
                 <Pressable
-                    onPress={() => { dispatch(removeItem()) }}
+                    onPress={() => { dispatch(removeItem(item.id)) }}
                 >
                     <Icon name="delete" size={24} color="#FC7A5E" style={styles.trashIcon} />
                 </Pressable>

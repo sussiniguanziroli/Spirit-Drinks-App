@@ -52,9 +52,9 @@ const MainNavigator = () => {
                     if (session.length) {
                         dispatch(setUser(session[0]))
                     }
-                    console.log('sesion', session)
+                   
                 } catch (error) {
-                    console.log('error al obtener la sesion', error)
+                    
                 }
             })()
         }

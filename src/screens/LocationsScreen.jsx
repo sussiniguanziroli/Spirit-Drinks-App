@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { Platform, Text, View, StyleSheet, TextInput, Pressable, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { colores } from '../global/colores';
+import { useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import ItemCard from '../components/ItemCard';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { geocoding_api_key } from '../firebase/config';
-
+import { useAddDireccionMutation } from '../services/userService';
 import * as Location from 'expo-location';
 
 
@@ -17,12 +18,16 @@ const LocationsScreen = () => {
     const [places, setPlaces] = useState([])
     const [address, setAddress] = useState("")
 
+    const localId = useSelector(state => state.authReducer.value.localId)
+
+    const [triggerAddLocation, result] = useAddDireccionMutation();
+
 
     const showToast = (type, message) => {
         Toast.show({
             type: type,
             text1: message,
-            visibilityTime: 2000, 
+            visibilityTime: 2000,
         });
     };
 
@@ -84,15 +89,32 @@ const LocationsScreen = () => {
         }
     }
 
-    const savePlace = () => {
-        if(location && title){
-            setPlaces(prevState => [...prevState, { "id": Math.random(), title, "coords": { "latitude": location.latitude, "longitude": location.longitude },"address": address }])
-            setTitle("")
-            setLocation("")
-        }else{
-            showToast("error", "No se completaron todos los datos")
+    const savePlace = async () => {
+        if (location && title) {
+            const nuevaDireccion = {
+                title,
+                address,
+                coords: {
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                },
+            };
+
+            try {
+                await triggerAddLocation({ localId, direccion: nuevaDireccion }).unwrap();
+                setPlaces((prevState) => [...prevState, { ...nuevaDireccion, id: Math.random().toString() }]);
+                setTitle("");
+                setLocation(null);
+                setAddress("");
+                showToast("success", "¡Dirección guardada exitosamente!");
+            } catch (error) {
+                console.error("Error guardando dirección:", error);
+                showToast("error", "Hubo un problema al guardar la dirección.");
+            }
+        } else {
+            showToast("error", "Completa todos los campos antes de guardar.");
         }
-    }
+    };
 
 
 
@@ -119,59 +141,59 @@ export default LocationsScreen
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      padding: 20,
+        flex: 1,
+        padding: 20,
     },
     title: {
-      fontSize: 18,
+        fontSize: 18,
     },
     subtitle: {
-      fontSize: 12,
-      color: colores.grisMedio
+        fontSize: 12,
+        color: colores.grisMedio
     },
     inputContainer: {
-      paddingVertical: 16,
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      alignItems: 'center'
+        paddingVertical: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
     textInput: {
-      borderWidth: 1,
-      borderColor: colores.grisMedio,
-      borderRadius: 20,
-      padding: 8,
-      width: '80%',
-      paddingLeft: 16,
+        borderWidth: 1,
+        borderColor: colores.grisMedio,
+        borderRadius: 20,
+        padding: 8,
+        width: '80%',
+        paddingLeft: 16,
     },
     placesContainer: {
-      marginTop: 16
+        marginTop: 16
     },
     placeContainer: {
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      padding: 16,
-      margin: 4,
-      gap: 24
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        padding: 16,
+        margin: 4,
+        gap: 24
     },
     mapContainer: {
-      width: 120,
-      height: 120,
-      borderRadius: 75,
-      overflow: "hidden",
-      elevation: 5,
+        width: 120,
+        height: 120,
+        borderRadius: 75,
+        overflow: "hidden",
+        elevation: 5,
     },
     map: {
-      width: 120,
-      height: 120,
+        width: 120,
+        height: 120,
     },
     mapTitle: {
-      fontWeight: '700'
+        fontWeight: '700'
     },
     address: {
-  
+
     },
     placeDescriptionContainer: {
-      width: '60%',
-      padding: 8
+        width: '60%',
+        padding: 8
     }
-  });
+});

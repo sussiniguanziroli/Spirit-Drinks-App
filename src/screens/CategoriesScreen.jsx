@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     image: {
-        width: 120,
-        height: 50,
+        width: 100,
+        height: 80,
     },
     categoryTitle: {
         fontSize: 30,

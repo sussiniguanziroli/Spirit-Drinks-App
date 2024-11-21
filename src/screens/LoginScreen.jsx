@@ -25,20 +25,18 @@ const LoginScreen = ({ navigation }) => {
         if (result.isSuccess) {
             dispatch(setUser(result.data))
             if (rememberMe) {
-                clearSessions().then(() => console.log("sesiones eliminadas")).catch(error => console.log('no se elimino sesion'))
+                clearSessions()
                 insertSessions({
                     localId: result.data.localId,
                     email: result.data.email,
                     token: result.data.idToken,
                 })
-                    .then((result) => console.log("Result exitoso", result))
-                    .catch((error) => console.log('Error', error))
+                   
             }
         }
     }, [result, rememberMe])
 
     const onsubmit = () => {
-        //console.log(email,password)       
         triggerLogin({ email, password })
     }
 
