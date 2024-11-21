@@ -6,7 +6,7 @@ export const validationSchema = object({
     confirmPassword: 
         string()
         .required("La contraseña no puede estar vacía")
-        .oneOf([ref('contraseña'), null], "Las contraseñas deben coincidir")
+        .oneOf([ref('password'), null], "Las contraseñas deben coincidir")
     ,
     password:
         string()

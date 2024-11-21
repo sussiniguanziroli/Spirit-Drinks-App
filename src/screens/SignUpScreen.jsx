@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
 import { colores } from '../global/colores';
 import { useSignUpMutation } from '../services/authService';
 import { setUser } from '../features/auth/authSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setProfileData } from '../features/user/userSlice';
-import { useSelector } from 'react-redux';
 import { usePutProfileDataMutation } from '../services/userService';
 import { validationSchema } from '../validations/validationSchema';
-import { Alert } from 'react-native';
-
+import Toast from 'react-native-toast-message';
 
 const SignUpScreen = ({ navigation }) => {
-
-    const profileData = useSelector(state => state.userReducer)
-    const localId = useSelector(state => state.authReducer.value.localId)
+    const profileData = useSelector(state => state.userReducer);
+    const localId = useSelector(state => state.authReducer.value.localId);
 
     const [data, setData] = useState({
         name: profileData.name,
         surname: profileData.surname,
     });
-
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,10 +28,7 @@ const SignUpScreen = ({ navigation }) => {
     const [errorPassword, setErrorPassword] = useState("");
     const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
 
-    const [genericValidationError, setGenericValidationError] = useState("");
-
-
-    const [triggerPutProfileDataMutation, resultBis] = usePutProfileDataMutation();
+    const [triggerPutProfileDataMutation] = usePutProfileDataMutation();
     const [triggerSignUp, result] = useSignUpMutation();
 
     const dispatch = useDispatch();
@@ -44,79 +37,90 @@ const SignUpScreen = ({ navigation }) => {
         setData((prev) => ({ ...prev, [key]: value }));
     };
 
-
+    const showToast = (type, message) => {
+        Toast.show({
+            type: type,
+            text1: message,
+            visibilityTime: 2000, 
+        });
+    };
 
     useEffect(() => {
-        if (result.status === "rejected") {
-        } else if (result.status === "fulfilled") {
-            dispatch(setUser(result.data))
+        if (result.status === "fulfilled") {
+            dispatch(setUser(result.data));
         }
-    }, [result])
+    }, [result]);
 
-    const onSubmit = async () => {
+    const onConfirmAge = () => {
+        Alert.alert(
+            "Confirmación de edad",
+            "Debes ser mayor de 18 años para registrarte. ¿Confirmas que eres mayor de 18 años?",
+            [
+                {
+                    text: "No",
+                    style: "cancel",
+                },
+                {
+                    text: "Sí",
+                    onPress: () => handleSignUp(),
+                },
+            ]
+        );
+    };
+
+    const handleSignUp = async () => {
         try {
-            validationSchema.validateSync({data, email, password, confirmPassword })
-            setErrorConfirmPassword("")
-            setErrorEmail("")
-            setErrorPassword("")
-            setErrorName("")
-            setErrorSurname("")
-            // Primero, intenta registrar al usuario
-            const signUpResponse = await triggerSignUp({
-                email,
-                password,
-            }).unwrap(); // unwrap para manejar errores directamente
+            
+            validationSchema.validateSync({ data, email, password, confirmPassword });
+            setErrorConfirmPassword("");
+            setErrorEmail("");
+            setErrorPassword("");
+            setErrorName("");
+            setErrorSurname("");
 
-            // Si se crea el usuario, obtén el localId
+           
+            const signUpResponse = await triggerSignUp({ email, password }).unwrap();
             const { localId } = signUpResponse;
 
-            // Actualiza el estado global con la información del usuario
             dispatch(setUser(signUpResponse));
 
-            // Prepara los datos del perfil
+           
             const profilePayload = {
                 name: data.name.trim(),
                 surname: data.surname.trim(),
             };
 
-            // Guarda los datos del perfil en Firebase
             await triggerPutProfileDataMutation({ data: profilePayload, localId }).unwrap();
-
-            // Actualiza el estado global con los datos del perfil
             dispatch(setProfileData(profilePayload));
-
+            showToast("success", "Creaste tu cuenta con exito!")
+            
         } catch (error) {
-            // Manejo de errores
-            console.error("Error durante el registro:", error);
             Alert.alert("Error", "Hubo un problema al registrarse. Inténtalo de nuevo.");
             switch (error.path) {
                 case "email":
-                    setErrorEmail(error.message)
-                    break
+                    setErrorEmail(error.message);
+                    break;
                 case "password":
-                    setErrorPassword(error.message)
-                    break
+                    setErrorPassword(error.message);
+                    break;
                 case "confirmPassword":
-                    setErrorConfirmPassword(error.message)
-                    break
+                    setErrorConfirmPassword(error.message);
+                    break;
                 case "data":
-                    setErrorName("El nombre debe ser valido")
+                    setErrorName("El nombre debe ser válido");
                 case "data":
-                    setErrorSurname("El nombre debe ser valido")
-                    break
+                    setErrorSurname("El apellido debe ser válido");
+                    break;
                 default:
-                    setGenericValidationError(error.message)
-                    break
+                    break;
             }
         }
     };
-
 
     return (
         <View style={styles.container}>
             <Text style={styles.logo}>Spirit Drinks</Text>
             <Text style={styles.subtitle}>Registro</Text>
-
 
             <TextInput
                 placeholderTextColor={colores.grisClaro}
@@ -136,7 +140,8 @@ const SignUpScreen = ({ navigation }) => {
             <Text style={styles.whiteLabel}>{errorSurname}</Text>
             <TextInput
                 onChangeText={(text) => setEmail(text)}
-                style={styles.input} placeholder="Email"
+                style={styles.input}
+                placeholder="Email"
                 placeholderTextColor={colores.grisClaro}
             />
             <Text style={styles.whiteLabel}>{errorEmail}</Text>
@@ -161,9 +166,7 @@ const SignUpScreen = ({ navigation }) => {
                     styles.button,
                     { backgroundColor: pressed ? colores.verdeOscuro : colores.verdeEsmeralda },
                 ]}
-                onPress={() => {
-                    onSubmit()
-                }}
+                onPress={onConfirmAge}
             >
                 <Text style={styles.buttonText}>Registrarse</Text>
             </Pressable>
@@ -175,6 +178,9 @@ const SignUpScreen = ({ navigation }) => {
         </View>
     );
 };
+
+
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -227,4 +233,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SignUpScreen;
+

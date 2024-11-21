@@ -22,7 +22,7 @@ const LocationsScreen = () => {
         Toast.show({
             type: type,
             text1: message,
-            visibilityTime: 2000, // Duración en milisegundos
+            visibilityTime: 2000, 
         });
     };
 
@@ -69,7 +69,6 @@ const LocationsScreen = () => {
                     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}&key=${geocoding_api_key}`
                 );
                 const data = await response.json()
-                //console.log(data)
                 if (data.status === 'OK') {
                     const formattedAddress = data.results[0].formatted_address;
                     setAddress(formattedAddress)
@@ -81,7 +80,6 @@ const LocationsScreen = () => {
                 setErrorMsg('Error getting location');
                 showToast("error", "No se pudo obtener la ubicación")
             }
-            //console.log(location.coords)
             setLocation(location.coords);
         }
     }

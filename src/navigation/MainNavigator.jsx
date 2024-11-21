@@ -14,6 +14,7 @@ import { setUser } from "../features/auth/authSlice";
 import { setProfileData } from "../features/user/userSlice";
 
 import StartScreen from "../screens/StartScreen";
+import TourScreen from "../screens/TourScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -23,8 +24,6 @@ const MainNavigator = () => {
     const localId = useSelector(state => state.authReducer.value.localId);
     const profileData = useSelector(state => state.userReducer);
     const [showStartScreen, setShowStartScreen] = useState(false);
-
-
 
     const dispatch = useDispatch();
 
@@ -72,6 +71,11 @@ const MainNavigator = () => {
                             name="StartScreen"
                             component={StartScreen}
                             options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                            name='Tour'
+                            component={TourScreen}
+                            options={{headerShown: false}}
                         />
                         <Stack.Screen
                             name="TabNavigator"

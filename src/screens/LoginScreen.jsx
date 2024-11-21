@@ -6,7 +6,7 @@ import { setUser } from '../features/auth/authSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { insertSessions, clearSessions } from '../db';
-import  Icon  from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 const LoginScreen = ({ navigation }) => {
@@ -20,26 +20,26 @@ const LoginScreen = ({ navigation }) => {
     const [triggerLogin, result] = useLoginMutation()
 
 
-    useEffect(()=>{
-        
-        if(result.isSuccess){
-            dispatch(setUser(result.data))   
+    useEffect(() => {
+
+        if (result.isSuccess) {
+            dispatch(setUser(result.data))
             if (rememberMe) {
-                clearSessions().then(()=>console.log("sesiones eliminadas")).catch(error => console.log('no se elimino sesion'))
+                clearSessions().then(() => console.log("sesiones eliminadas")).catch(error => console.log('no se elimino sesion'))
                 insertSessions({
                     localId: result.data.localId,
                     email: result.data.email,
                     token: result.data.idToken,
                 })
-                    .then((result) =>console.log("Result exitoso",result))
-                    .catch((error) =>console.log('Error',error))
+                    .then((result) => console.log("Result exitoso", result))
+                    .catch((error) => console.log('Error', error))
             }
         }
-    },[result, rememberMe]) 
+    }, [result, rememberMe])
 
-    const onsubmit = ()=>{
+    const onsubmit = () => {
         //console.log(email,password)       
-        triggerLogin({email,password})
+        triggerLogin({ email, password })
     }
 
     return (
@@ -77,10 +77,10 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={styles.linkText}>Mantener Sesion Iniciada</Text>
                 {
                     rememberMe
-                    ?
-                    <Pressable onPress={()=> setRememberMe(!rememberMe)}><Icon name="toggle-on" size={48} color={colores.verdeEsmeralda} /></Pressable>
-                    :
-                    <Pressable onPress={()=> setRememberMe(!rememberMe)}><Icon name="toggle-off" size={48} color={colores.doradoApagado} /></Pressable>
+                        ?
+                        <Pressable onPress={() => setRememberMe(!rememberMe)}><Icon name="toggle-on" size={48} color={colores.verdeEsmeralda} /></Pressable>
+                        :
+                        <Pressable onPress={() => setRememberMe(!rememberMe)}><Icon name="toggle-off" size={48} color={colores.doradoApagado} /></Pressable>
                 }
             </View>
             <Text style={styles.linkText}>
@@ -88,14 +88,8 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={styles.link} onPress={() => navigation.navigate('SignUp')}> Crear una</Text>
             </Text>
 
-            <Pressable onPress={()=>dispatch(setUser({email:"demo@mundogeek.com",token:"demo"}))}>
-                <Text style={styles.guestText}>
-                    ¿Sólo quieres dar un vistazo?
-                    <Text style={styles.guestLink}> Ingresa como invitado</Text>
-                </Text>
-            </Pressable>
+           
 
-            
         </View>
     );
 };
@@ -152,7 +146,7 @@ const styles = StyleSheet.create({
         color: colores.verdeEsmeralda,
         fontWeight: 'bold',
     },
-    rememberMeView :{
+    rememberMeView: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,

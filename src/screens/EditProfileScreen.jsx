@@ -182,7 +182,7 @@ const EditProfileScreen = ({ navigation }) => {
                     />
                 )}
             </View>
-
+            <Text style={styles.label}>Bebida Favorita:</Text>
             <Picker
                 selectedValue={data.favoriteDrink}
                 style={styles.picker}
@@ -194,6 +194,7 @@ const EditProfileScreen = ({ navigation }) => {
                 <Picker.Item label="Argento" value="Argento" />
                 <Picker.Item label="Vino y Espumante" value="Vino y Espumante" />
             </Picker>
+            <Text style={styles.label}>Nivel de experiencia</Text>
             <Picker
                 selectedValue={data.experienceLevel}
                 style={styles.picker}
