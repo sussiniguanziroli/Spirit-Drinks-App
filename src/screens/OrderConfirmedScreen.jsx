@@ -15,7 +15,7 @@ const OrderConfirmedScreen = ({ navigation }) => {
 
       <Pressable
         style={styles.button}
-        onPress={() =>  navigation.navigate("TabNavigator", { screen: "Categories" })}
+        onPress={() =>  navigation.navigate("Shop", { screen: "Categories" })}
       >
         <Text style={styles.buttonText}>Volver al inicio</Text>
       </Pressable>

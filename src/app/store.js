@@ -3,7 +3,6 @@ import shopReducer from "../features/shop/shopSlice";
 import cartReducer from "../features/cart/cartSlice";
 import authReducer from "../features/auth/authSlice";
 import userReducer from "../features/user/userSlice";
-import locationsReducer from "../features/location/locationsSlice";
 import { receiptsApi } from "../services/receiptsService";
 import { authApi } from "../services/authService";
 import { shopApi } from "../services/shopService";
