@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import '../Spirit-Drinks-App/src/firebase/config';
 
 export default {
   expo: {
