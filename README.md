@@ -30,7 +30,7 @@ npm install -g expo-cli
 1. Clona el repositorio:
 
 ```bash
-git clone <URL_DEL_REPO>
+git clone https://github.com/sussiniguanziroli/Spirit-Drinks-App
 cd spirit-drinks-app
 ```
 
