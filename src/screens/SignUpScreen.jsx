@@ -119,6 +119,9 @@ const SignUpScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+            <Toast
+                style={{ zIndex: 100, position: 'absolute', top: 0, left: 0, right: 0 }}
+            />
             <Text style={styles.logo}>Spirit Drinks</Text>
             <Text style={styles.subtitle}>Registro</Text>
 

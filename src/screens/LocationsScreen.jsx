@@ -35,7 +35,6 @@ const LocationsScreen = () => {
             showToast("success", "¡Dirección eliminada exitosamente!");
             refetch(); 
         } catch (error) {
-            console.error("Error eliminando dirección:", error);
             showToast("error", "Hubo un problema al eliminar la dirección.");
         }
     };

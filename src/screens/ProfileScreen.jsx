@@ -37,7 +37,6 @@ const ProfileScreen = ({ navigation }) => {
                 "Por favor, agrega más información en tu perfil para mejorar tu experiencia.",
                 [
                     { text: "Completar Informacion", onPress: () => navigation.navigate('EditarPerfil') },
-                    { text: "Cerrar", style: "cancel" },
                 ]
             );
         }
