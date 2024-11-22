@@ -4,22 +4,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import { usePostReceiptMutation } from '../services/receiptsService';
 import { clearCart } from '../features/cart/cartSlice';
 import { useGetDireccionsQuery } from '../services/userService';
+import { ActivityIndicator } from 'react-native';
+import { colores } from '../global/colores';
 
 const CartConfirmationScreen = ({ navigation }) => {
     const cart = useSelector(state => state.cartReducer.value.cartItems);
     const total = useSelector(state => state.cartReducer.value.total);
     const localId = useSelector(state => state.authReducer.value.localId);
-    const { data: direcciones = [], error, result, refetch } = useGetDireccionsQuery(localId);
+    const { data: direcciones, error, isLoading, refetch } = useGetDireccionsQuery(localId);
 
     const [direccionSeleccionada, setDireccionSeleccionada] = useState(null);
     const [triggerPost] = usePostReceiptMutation();
     const dispatch = useDispatch();
 
 
-    useEffect(() => {
-      refetch()
-    }, [direcciones])
     
+
+    useEffect(() => {
+        refetch()
+    }, [direcciones])
+
 
     const handleConfirm = () => {
         if (!direccionSeleccionada) {
@@ -37,13 +41,18 @@ const CartConfirmationScreen = ({ navigation }) => {
         triggerPost({ localId, receipt })
             .then(() => {
                 dispatch(clearCart());
-                navigation.navigate('Receipts');
+                navigation.navigate('Confirmacion');
             })
             .catch(error => {
                 Alert.alert('Error', 'Hubo un problema al confirmar tu orden.');
                 console.error(error);
             });
     };
+
+    if (isLoading) {
+        return <ActivityIndicator/>;
+    }
+
 
     return (
         <View style={styles.container}>
@@ -69,7 +78,7 @@ const CartConfirmationScreen = ({ navigation }) => {
             />
 
             <View style={styles.buttonsContainer}>
-                <Pressable style={styles.backButton} onPress={() => {navigation.goBack(), refetch()}}>
+                <Pressable style={styles.backButton} onPress={() => { navigation.goBack(), refetch() }}>
                     <Text style={styles.buttonText}>Volver al carrito</Text>
                 </Pressable>
                 <Pressable style={styles.confirmButton} onPress={handleConfirm}>
@@ -85,17 +94,17 @@ const styles = StyleSheet.create({
     title: { fontSize: 20, fontWeight: '700', marginBottom: 10 },
     total: { fontSize: 16, marginBottom: 20 },
     subtitle: { fontSize: 18, fontWeight: '500', marginBottom: 10 },
-    direccion: { 
-        padding: 10, 
-        marginVertical: 5, 
-        borderWidth: 1, 
-        borderRadius: 5, 
-        backgroundColor: '#f8f8f8' 
+    direccion: {
+        padding: 10,
+        marginVertical: 5,
+        borderWidth: 1,
+        borderRadius: 5,
+        backgroundColor: '#f8f8f8'
     },
     selectedDireccion: { borderColor: 'green', backgroundColor: '#d0f0c0' },
     buttonsContainer: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 },
-    backButton: { backgroundColor: '#ff6f61', padding: 15, borderRadius: 10, flex: 0.45 },
-    confirmButton: { backgroundColor: '#4CAF50', padding: 15, borderRadius: 10, flex: 0.45 },
+    backButton: { backgroundColor: colores.borgona, padding: 15, borderRadius: 10, flex: 0.45 },
+    confirmButton: { backgroundColor: colores.verdeEsmeralda, padding: 15, borderRadius: 10, flex: 0.45 },
     buttonText: { color: '#fff', fontWeight: '700', textAlign: 'center' },
     emptyMessage: { textAlign: 'center', marginTop: 20, color: '#888' },
 });

@@ -8,7 +8,7 @@ const StartScreen = ({ navigation }) => {
     };
 
     const handleTourPress = () => {
-        navigation.navigate('Tour'); // Cambia 'Tour' al nombre de tu screen de tour si tienes una
+        navigation.navigate('Tour'); 
     };
 
     return (

@@ -1,27 +1,47 @@
 import { useState, useEffect } from 'react';
 import { Platform, Text, View, StyleSheet, TextInput, Pressable, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colores } from '../global/colores';
 import { useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import ItemCard from '../components/ItemCard';
 import MapView, { Marker } from 'react-native-maps';
 import { geocoding_api_key } from '../firebase/config';
-import { useAddDireccionMutation } from '../services/userService';
+import { useAddDireccionMutation, useGetDireccionsQuery } from '../services/userService';
 import * as Location from 'expo-location';
-
+import { useDeleteDireccionMutation } from '../services/userService';
 
 const LocationsScreen = () => {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [title, setTitle] = useState("")
-    const [places, setPlaces] = useState([])
-    const [address, setAddress] = useState("")
+    const [title, setTitle] = useState("");
+    const [address, setAddress] = useState("");
+    const [places, setPlaces] = useState([]);
 
-    const localId = useSelector(state => state.authReducer.value.localId)
-
+    const localId = useSelector(state => state.authReducer.value.localId);
+    const { data: direcciones, error, isLoading, refetch } = useGetDireccionsQuery(localId);
     const [triggerAddLocation, result] = useAddDireccionMutation();
+    const [triggerDeleteLocation] = useDeleteDireccionMutation();
 
+    const validDirecciones = Array.isArray(direcciones) ? direcciones : [];  
+
+    useEffect(() => {
+        refetch()
+    }, [direcciones])
+
+    const deletePlace = async (id) => {
+        try {
+            await triggerDeleteLocation({ localId, direccionId: id }).unwrap();
+            showToast("success", "¡Dirección eliminada exitosamente!");
+            refetch(); 
+        } catch (error) {
+            console.error("Error eliminando dirección:", error);
+            showToast("error", "Hubo un problema al eliminar la dirección.");
+        }
+    };
+    
+
+    const allPlaces = [...validDirecciones, ...places];
 
     const showToast = (type, message) => {
         Toast.show({
@@ -32,12 +52,12 @@ const LocationsScreen = () => {
     };
 
     const getPermissions = async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync()
+        let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
             return false;
         }
-        return true
-    }
+        return true;
+    };
 
     const renderPlaceItem = ({ item }) => (
         <ItemCard style={styles.placeContainer}>
@@ -51,20 +71,22 @@ const LocationsScreen = () => {
                         longitudeDelta: 0.0421,
                     }}
                 >
-                    <Marker coordinate={{ "latitude": item.coords.latitude, "longitude": item.coords.longitude }} />
+                    <Marker coordinate={{ latitude: item.coords.latitude, longitude: item.coords.longitude }} />
                 </MapView>
             </View>
             <View style={styles.placeDescriptionContainer}>
                 <Text style={styles.mapTitle}>{item.title}</Text>
                 <Text style={styles.address}>{item.address}</Text>
             </View>
+            <Pressable onPress={() => deletePlace(item.id)} style={styles.deleteButton}>
+                <Icon name="delete" color={colores.rojoError} size={24} />
+            </Pressable>
         </ItemCard>
-    )
-
-
+    );
 
     const getLocation = async () => {
-        const permissionOk = await getPermissions()
+        refetch()
+        const permissionOk = await getPermissions();
         if (!permissionOk) {
             setErrorMsg('Permission to access location was denied');
         } else {
@@ -73,21 +95,21 @@ const LocationsScreen = () => {
                 const response = await fetch(
                     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}&key=${geocoding_api_key}`
                 );
-                const data = await response.json()
+                const data = await response.json();
                 if (data.status === 'OK') {
                     const formattedAddress = data.results[0].formatted_address;
-                    setAddress(formattedAddress)
+                    setAddress(formattedAddress);
                 } else {
-                    console.log('Error en geocodificación inversa:', data.error_message)
+                    console.log('Error en geocodificación inversa:', data.error_message);
                 }
-                showToast("success", "¡Ubicación obtenida!")
+                showToast("success", "¡Ubicación obtenida!");
             } else {
                 setErrorMsg('Error getting location');
-                showToast("error", "No se pudo obtener la ubicación")
+                showToast("error", "No se pudo obtener la ubicación");
             }
             setLocation(location.coords);
         }
-    }
+    };
 
     const savePlace = async () => {
         if (location && title) {
@@ -116,8 +138,6 @@ const LocationsScreen = () => {
         }
     };
 
-
-
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Mis lugares:</Text>
@@ -128,16 +148,16 @@ const LocationsScreen = () => {
             </View>
             <Text style={styles.subtitle}>Tus lugares favoritos:</Text>
             <FlatList
-                data={places}
-                keyExtractor={item => item.id}
+                data={allPlaces}  
+                keyExtractor={item => item.id.toString()}
                 renderItem={renderPlaceItem}
             />
             <Toast />
         </View>
     );
-}
+};
 
-export default LocationsScreen
+export default LocationsScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -165,9 +185,6 @@ const styles = StyleSheet.create({
         width: '80%',
         paddingLeft: 16,
     },
-    placesContainer: {
-        marginTop: 16
-    },
     placeContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -178,7 +195,7 @@ const styles = StyleSheet.create({
     mapContainer: {
         width: 120,
         height: 120,
-        borderRadius: 75,
+        borderRadius: 25,
         overflow: "hidden",
         elevation: 5,
     },
@@ -189,11 +206,14 @@ const styles = StyleSheet.create({
     mapTitle: {
         fontWeight: '700'
     },
-    address: {
-
-    },
+    address: {},
     placeDescriptionContainer: {
         width: '60%',
         padding: 8
-    }
+    },
+    deleteButton: {
+        position: 'absolute',
+        top: 8,
+        right: 8,
+    },
 });

@@ -8,7 +8,7 @@ import {
     Modal,
     TouchableOpacity,
     ScrollView,
-    Button,
+    
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useGetReceiptsQuery } from '../services/receiptsService';
@@ -113,13 +113,18 @@ const ReceiptScreen = () => {
 
     return (
         <View style={{ flex: 1 }}>
+            <Pressable
+                    style={styles.refreshBtn}
+                    onPress={refetch}
+                >
+                    <Icon name="refresh" size={30} color={colores.mainTheme} />
+                </Pressable>
             <FlatList
                 data={receiptArray}
                 keyExtractor={(item) => item.id}
                 renderItem={renderReceiptItem}
             />
 
-            {/* Modal */}
             <Modal
                 visible={modalVisible}
                 animationType="slide"
@@ -130,6 +135,16 @@ const ReceiptScreen = () => {
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Detalles del Recibo</Text>
                         <ScrollView style={styles.modalScroll}>
+                            
+                            {selectedReceipt?.direccion && (
+                                <View style={styles.addressContainer}>
+                                    <Text style={styles.addressTitle}>Dirección:</Text>
+                                    <Text style={styles.addressDetail}>Título: {selectedReceipt.direccion.title}</Text>
+                                    <Text style={styles.addressDetail}>Dirección: {selectedReceipt.direccion.address}</Text>
+                                </View>
+                            )}
+
+                            
                             {selectedReceipt?.cart.map((item, index) => (
                                 <View key={index} style={styles.cartItem}>
                                     <Text style={styles.itemName}>{item.name}</Text>
@@ -147,6 +162,7 @@ const ReceiptScreen = () => {
                     </View>
                 </View>
             </Modal>
+
         </View>
     );
 };
@@ -272,5 +288,20 @@ const styles = StyleSheet.create({
     closeButtonText: {
         color: '#fff',
         fontWeight: 'bold',
+    },
+    addressContainer: {
+        marginBottom: 10,
+        padding: 10,
+        backgroundColor: "#f9f9f9",
+        borderRadius: 5,
+    },
+    addressTitle: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginBottom: 5,
+    },
+    addressDetail: {
+        fontSize: 14,
+        color: "#555",
     },
 });

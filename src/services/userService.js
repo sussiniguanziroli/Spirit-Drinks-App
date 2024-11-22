@@ -27,8 +27,20 @@ export const userApi = createApi({
         }),
         getDireccions: builder.query({
             query: (localId) => `profilesData/${localId}/misDirecciones.json`,
+            transformResponse: (response) => {
+                return Object.entries(response || {}).map(([id, data]) => ({
+                    id,
+                    ...data,
+                }));
+            },
+        }),
+        deleteDireccion: builder.mutation({
+            query: ({ localId, direccionId }) => ({
+                url: `profilesData/${localId}/misDirecciones/${direccionId}.json`,
+                method: 'DELETE',
+            }),
         }),    
     }),
 });
 
-export const { usePutProfileDataMutation, useGetProfilePictureQuery, useGetDireccionsQuery, useAddDireccionMutation } = userApi;
+export const { usePutProfileDataMutation, useGetProfilePictureQuery, useGetDireccionsQuery, useAddDireccionMutation, useDeleteDireccionMutation } = userApi;
