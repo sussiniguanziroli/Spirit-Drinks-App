@@ -24,6 +24,29 @@ npm install -g expo-cli
 ```
 
 3. **Firebase**: Configuración de Realtime Database y autenticación.
+---
+
+## Instalación y ejecución
+1. Clona el repositorio:
+
+```bash
+git clone <URL_DEL_REPO>
+cd spirit-drinks-app
+```
+
+2. Instala las dependencias:
+
+```bash
+npm install
+```
+
+3. Inicia el entorno de desarrollo:
+
+```bash
+npx expo start
+```
+
+4. Escanea el código QR desde la app de Expo Go para ejecutar la aplicación en un dispositivo físico.
 
 ---
 
