@@ -18,6 +18,11 @@
 ## Requisitos del Sistema
 1. **Node.js**: Versión más reciente recomendada.
 2. **Expo CLI**: Instalación necesaria para ejecutar la aplicación.
+
+```bash
+npm install -g expo-cli
+```
+
 3. **Firebase**: Configuración de Realtime Database y autenticación.
 
 ---
