@@ -1,29 +1,12 @@
 {
   "expo": {
-    "name": "spirit-drinks-app",
-    "slug": "spirit-drinks-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "newArchEnabled": true,
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
+    "extra": {
+      "eas": {
+        "projectId": "83a8e462-881d-4ac3-a9cb-9399573fef01"
+      }
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "icon": "./assets/icon.png"
-    },
-    "plugins": [
-      "expo-font"
-    ]
+      "package": "com.sussiniguanziroli.spiritdrinksapp"
+    }
   }
 }
